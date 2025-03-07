@@ -20,6 +20,7 @@ function setup() {
     createCanvas(400, 400);
     // create an engine
     engine = Engine.create();
+    engine.world.gravity.y = 0;
     world = engine.world;
     // Engine.run is deprecated
     ground = new Boundary(200, height, width, 100);
