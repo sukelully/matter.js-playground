@@ -23,15 +23,25 @@ function setup() {
     engine = Engine.create();
     world = engine.world;
 
-    boundaries.push(new Boundary(150, 100, width* 0.6, 20, 0.3));
-    boundaries.push(new Boundary(250, 300, width * 0.6, 20, -0.3));
+    generateBorders();
+
+    boundaries.push(new Boundary(150, 100, width* 0.6, 20));
+
     boxes.push(new Box(50, 20, 20, 20));
     balls.push(new Ball(50, 50, 50));
-    
 }
     
 function mousePressed() {
     boxes.push(new Box(mouseX, mouseY, random(10, 40), random(10,40)));
+}
+
+function generateBorders() {
+    const thickness = 50;
+
+    boundaries.push(new Boundary(width/2, (thickness/2) * -1, width, thickness));
+    boundaries.push(new Boundary((thickness/2) * -1, height/2, height, thickness, PI / 2));
+    boundaries.push(new Boundary(width/2, height + (thickness/2), width, thickness));
+    boundaries.push(new Boundary(width + (thickness/2), height/2, thickness, height));
 }
 
 function draw() {
