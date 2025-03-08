@@ -34,8 +34,11 @@ function mousePressed() {
 function draw() {
     background(51);
     Engine.update(engine);
-    for (let i = 0; i < boxes.length; i++) {
-        boxes[i].show();
+
+    for (const box of boxes) {
+        box.show();
+        console.log(box.getVelocity());
     }
+    
     ground.show();
 }
