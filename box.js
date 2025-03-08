@@ -26,8 +26,4 @@ class Box {
         rect(0, 0, this.w, this.h);
         pop();
     }
-
-    getVelocity() {
-        // return this.body.velocity;
-    }
 }

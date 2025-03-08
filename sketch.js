@@ -14,14 +14,16 @@ const { Engine, World, Bodies, Composite } = Matter;
 let engine;
 let world;
 let boxes = [];
+let boundaries = [];
 let ground;
 
 function setup() {
     createCanvas(400, 400);
     engine = Engine.create();
     world = engine.world;
-    ground = new Boundary(200, height, width, 100);
-    Composite.add(world, ground);
+
+    boundaries.push(new Boundary(150, 100, width* 0.6, 20, 0.3));
+    boundaries.push(new Boundary(250, 300, width * 0.6, 20, -0.3));
 }
     
 function mousePressed() {
@@ -34,8 +36,9 @@ function draw() {
 
     for (const box of boxes) {
         box.show();
-        // console.log(box.getVelocity());
     }
     
-    ground.show();
+    for (const boundary of boundaries) {
+        boundary.show();
+    }
 }

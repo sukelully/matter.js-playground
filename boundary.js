@@ -1,12 +1,13 @@
 class Boundary {
-    constructor(x, y, w, h) {
+    constructor(x, y, w, h, a) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         let options = {
-            friction: 0.3,
+            friction: 0.1,
             restitution: 0.6,
+            angle: a,
             isStatic: true
         }
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
