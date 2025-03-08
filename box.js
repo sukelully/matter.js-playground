@@ -7,7 +7,6 @@ class Box {
         let options = {
             friction: 0.3,
             restitution: 0.6,
-            velocity: {x: 1, y: 1}
         }
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
         
@@ -28,7 +27,7 @@ class Box {
         pop();
     }
 
-    // getVelocity() {
-    //     return this.body.velocity;
-    // }
+    getVelocity() {
+        // return this.body.velocity;
+    }
 }
