@@ -5,7 +5,7 @@ class Boundary {
         this.w = w;
         this.h = h;
         let options = {
-            friction: 0.1,
+            friction: 0,
             restitution: 0.6,
             angle: a,
             isStatic: true

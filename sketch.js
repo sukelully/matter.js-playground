@@ -24,6 +24,7 @@ function setup() {
 
     boundaries.push(new Boundary(150, 100, width* 0.6, 20, 0.3));
     boundaries.push(new Boundary(250, 300, width * 0.6, 20, -0.3));
+    boxes.push(new Box(50, 20, 20, 20));
 }
     
 function mousePressed() {

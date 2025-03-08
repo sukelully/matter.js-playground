@@ -5,7 +5,7 @@ class Box {
         this.w = w;
         this.h = h;
         let options = {
-            friction: 0.3,
+            friction: 0.1,
             restitution: 0.6,
         }
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
