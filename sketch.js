@@ -15,6 +15,7 @@ let engine;
 let world;
 let boxes = [];
 let boundaries = [];
+let balls = [];
 let ground;
 
 function setup() {
@@ -25,6 +26,8 @@ function setup() {
     boundaries.push(new Boundary(150, 100, width* 0.6, 20, 0.3));
     boundaries.push(new Boundary(250, 300, width * 0.6, 20, -0.3));
     boxes.push(new Box(50, 20, 20, 20));
+    balls.push(new Ball(50, 50, 50));
+    
 }
     
 function mousePressed() {
@@ -41,5 +44,9 @@ function draw() {
     
     for (const boundary of boundaries) {
         boundary.show();
+    }
+
+    for (const ball of balls) {
+        ball.show();
     }
 }
