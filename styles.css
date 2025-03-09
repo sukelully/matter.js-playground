@@ -12,3 +12,7 @@ body {
     align-items: center;
     height: 100vh;
 }
+
+canvas {
+    border-radius: 100px;
+}
