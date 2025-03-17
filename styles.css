@@ -1,6 +1,6 @@
 *,
-*:before,
-*:after {
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,8 +11,15 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    gap: 1em;
 }
 
-canvas {
-    border-radius: 100px;
+#controls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+button {
+    padding: 1em;
 }
