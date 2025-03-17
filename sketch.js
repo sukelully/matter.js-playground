@@ -13,6 +13,9 @@ let ground;
 
 let buttonHighlight = '#252525';
 let buttonHighlightText = 'white';
+let mouseCount = 0;
+let stringPos1;
+let stringPos2;
 
 let mode = {
     marbles: true,
@@ -100,11 +103,31 @@ function mousePressed() {
             if (mode.marbles) {
                 marbles.push(new Ball(mouseX, mouseY, random(10, 40)))
             } else if (mode.strings) {
-                console.log('strings');
-                strings.push(new String(mouseX, mouseY, width * 0.6, 20, 0.4));
-            } else {
-                console.error('Error: Invalid mode selected');
+                // strings.push(new String(mouseX, mouseY, width * 0.6, 20, 0.4));
+                if (mouseCount === 0) {
+                    stringPos1 = { x: mouseX, y: mouseY };
+                    // marbles.push(new Ball(stringPos1.x, stringPos1.y, 20));
+                    console.log(`stringPos1.x: ${stringPos1.x}`);
+                    mouseCount++;
+                } else if (mouseCount === 1) {
+                    stringPos2 = { x: mouseX, y: mouseY };
+                    // marbles.push(new Ball(stringPos2.x, stringPos2.y, 20));
+                    console.log(`stringPos2.x: ${stringPos2.x}`);
+                    mouseCount = 0;
+
+                    let midX = ((stringPos2.x - stringPos1.x) / 2) + stringPos1.x;
+                    // let midY = stringPos2.y - stringPos1.y;
+                    let midY = ((stringPos2.y - stringPos1.y) / 2) + stringPos1.y;
+                    strings.push(new String(midX, midY, width * 0.6, 20, 0));
+                    console.log(`midX: ${midX}`);
+                    // console.log(midY);
+
+                    // strings.push(new String(midX, midY, width * 0.6, 20, 0));
+                    // strings.push(new String(mouseX, mouseY, width * 0.6, 20, 0.4));
+                }
             }
+        } else {
+            console.error('Error: Invalid mode selected');
         }
     }
 }

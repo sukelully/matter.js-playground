@@ -6,6 +6,7 @@ class Ball {
         let options = {
             friction: 0.1,
             restitution: 0.6,
+            isStatic: true
         }
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);
 
