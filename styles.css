@@ -7,8 +7,7 @@
 }
 
 :root {
-    --bg-cream: #f4f1de;
-    --bg-tan: #92817a;
+    --bg-tan: #dedbd2;
 }
 
 body {
@@ -17,7 +16,7 @@ body {
     align-items: center;
     height: 100vh;
     gap: 1em;
-    /* background-color: var(--bg-cream); */
+    background-color: var(--bg-tan);
 }
 
 #controls-container {
@@ -30,4 +29,6 @@ button {
     padding: 1em;
     border-radius: 5px;
     border: 1px solid black;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
 }

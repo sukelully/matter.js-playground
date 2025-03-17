@@ -1,3 +1,3 @@
 - [ ] Refactor sketch.js to use other classes where possible, eg move setupUI elsewhere
 - [ ] Get rid of old classes (boundary.js) and rename ball.js to marble.js
-- [ ]
+- [ ] Random pastel coloured marbles
