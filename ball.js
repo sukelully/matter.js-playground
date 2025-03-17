@@ -26,4 +26,8 @@ class Ball {
         ellipse(0, 0, this.r);
         pop();
     }
+
+    remove() {
+        Composite.remove(world, this.body);
+    }
 }

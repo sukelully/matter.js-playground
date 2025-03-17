@@ -6,12 +6,18 @@
     box-sizing: border-box;
 }
 
+:root {
+    --bg-cream: #f4f1de;
+    --bg-tan: #92817a;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     gap: 1em;
+    /* background-color: var(--bg-cream); */
 }
 
 #controls-container {
@@ -22,4 +28,6 @@ body {
 
 button {
     padding: 1em;
+    border-radius: 5px;
+    border: 1px solid black;
 }

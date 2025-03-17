@@ -27,4 +27,8 @@ class Boundary {
         rect(0, 0, this.w, this.h);
         pop();
     }
+
+    remove() {
+        Composite.remove(world, this.body);
+    }
 }
