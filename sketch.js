@@ -7,8 +7,7 @@ let clearStringsBtn;
 
 let engine;
 let world;
-let boxes = [];
-let boundaries = [];
+let strings = [];
 let marbles = [];
 let ground;
 
@@ -28,7 +27,7 @@ function setup() {
 
     generateBorders();
 
-    boundaries.push(new Boundary(150, 100, width * 0.6, 20, 0.4));
+    strings.push(new Boundary(150, 100, width * 0.6, 20, 0.4));
     marbles.push(new Ball(50, 50, 50));
 }
 
@@ -73,11 +72,7 @@ function setupUI() {
     clearStringsBtn.addEventListener('click', clearStrings);
 }
 
-function toggleBtn(e) {
-    console.log(e.target);
-}
-
-function placeMarbleBtnPressed(e) {
+function placeMarbleBtnPressed() {
     mode.marbles = true;
     mode.strings = false;
 
@@ -98,13 +93,19 @@ function createStringBtnPressed() {
 }
 
 function mousePressed() {
-    if (mode.marbles) {
-        marbles.push(new Ball(mouseX, mouseY, random(10, 40)))
-    } else if (mode.strings) {
-        console.log('strings');
-        boundaries.push(new Boundary(mouseX, mouseY, width * 0.6, 20, 0.4));
-    } else {
-        console.error('Error: Invalid mode selected');
+    // Limits interaction to canvas area
+    if (mouseX < width && mouseY < height) {
+        if (mouseX > 0 && mouseY > 0) {
+            // Functionality depends on selected mode
+            if (mode.marbles) {
+                marbles.push(new Ball(mouseX, mouseY, random(10, 40)))
+            } else if (mode.strings) {
+                console.log('strings');
+                strings.push(new String(mouseX, mouseY, width * 0.6, 20, 0.4));
+            } else {
+                console.error('Error: Invalid mode selected');
+            }
+        }
     }
 }
 
@@ -127,26 +128,22 @@ function clearMarbles() {
 }
 
 function clearStrings() {
-    for (const string of boundaries) {
+    for (const string of strings) {
         string.remove();
     }
 
-    boundaries.length = 0;
+    strings.length = 0;
 }
 
 function draw() {
     background(255);
     Engine.update(engine);
 
-    for (const box of boxes) {
-        box.show();
+    for (const string of strings) {
+        string.show();
     }
 
-    for (const boundary of boundaries) {
-        boundary.show();
-    }
-
-    for (const ball of marbles) {
-        ball.show();
+    for (const marble of marbles) {
+        marble.show();
     }
 }
