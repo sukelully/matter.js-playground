@@ -122,7 +122,7 @@ function mousePressed() {
                     let adj = stringPos2.x - stringPos1.x;
                     let hyp = Math.sqrt(opp ** 2 + adj ** 2);
 
-                    let rotation = Math.asin(opp/ hyp);
+                    let rotation = Math.asin(opp / hyp);
                     console.log(rotation);
                     strings.push(new String(midX, midY, hyp, 20, rotation));
                     console.log(`midX: ${midX}`);
