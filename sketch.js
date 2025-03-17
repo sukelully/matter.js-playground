@@ -124,7 +124,7 @@ function mousePressed() {
 
                     let rotation = Math.asin(opp/ hyp);
                     console.log(rotation);
-                    strings.push(new String(midX, midY, width * 0.6, 20, rotation));
+                    strings.push(new String(midX, midY, hyp, 20, rotation));
                     console.log(`midX: ${midX}`);
                     // console.log(midY);
 
