@@ -1,178 +1,111 @@
 const { Engine, World, Bodies, Composite } = Matter;
 const body = document.querySelector('body');
-let placeMarbleBtn;
-let createStringBtn;
-let clearMarblesBtn;
-let clearStringsBtn;
 
-let engine;
-let world;
-let strings = [];
-let marbles = [];
-let ground;
-
+let engine, world;
+let strings = [], marbles = [];
 let buttonHighlight = '#252525';
 let buttonHighlightText = 'white';
 let mouseCount = 0;
-let stringPos1;
-let stringPos2;
+let stringPos1, stringPos2;
 
-let mode = {
-    marbles: true,
-    strings: false
-};
+const mode = { marbles: true, strings: false };
 
 function setup() {
-    setupUI();  // This creates the buttons
+    setupUI();
     createCanvas(800, 800);
     engine = Engine.create();
     world = engine.world;
-
     generateBorders();
-
+    
     strings.push(new Boundary(150, 100, width * 0.6, 20, 0.4));
     marbles.push(new Ball(50, 50, 50));
 }
 
 function setupUI() {
-    // div#controls-container
     const controlsContainer = document.createElement('div');
     controlsContainer.id = 'controls-container';
+    
+    const buttons = [
+        { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
+        { id: 'create-string-btn', text: 'Create String', handler: () => setMode(false) },
+        { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
+        { id: 'clear-strings-btn', text: 'Clear Strings', handler: clearStrings }
+    ];
 
-    // button#place-marble-btn
-    placeMarbleBtn = document.createElement('button');
-    placeMarbleBtn.textContent = 'Place Marble';
-    placeMarbleBtn.id = 'place-marble-btn';
-    placeMarbleBtn.style.background = buttonHighlight;
-    placeMarbleBtn.style.color = buttonHighlightText;
-    controlsContainer.appendChild(placeMarbleBtn);
+    buttons.forEach(({ id, text, handler }) => {
+        const btn = document.createElement('button');
+        btn.id = id;
+        btn.textContent = text;
+        if (id === 'place-marble-btn') applyButtonHighlight(btn, true);
+        btn.addEventListener('click', handler);
+        controlsContainer.appendChild(btn);
+    });
 
-    // button#create-string-btn
-    createStringBtn = document.createElement('button');
-    createStringBtn.textContent = 'Create String';
-    createStringBtn.id = 'create-string-btn';
-    controlsContainer.appendChild(createStringBtn);
-
-    // button#clear-marbles-btn
-    clearMarblesBtn = document.createElement('button');
-    clearMarblesBtn.textContent = 'Clear Marbles';
-    clearMarblesBtn.id = 'clear-marbles-btn';
-    controlsContainer.appendChild(clearMarblesBtn);
-
-    // button#clear-strings-btn
-    clearStringsBtn = document.createElement('button');
-    clearStringsBtn.textContent = 'Clear Strings';
-    clearStringsBtn.id = 'clear-strings-btn';
-    controlsContainer.appendChild(clearStringsBtn);
-
-    // Append controls container to body
     body.appendChild(controlsContainer);
-
-    // Event listeners
-    placeMarbleBtn.addEventListener('click', placeMarbleBtnPressed);
-    createStringBtn.addEventListener('click', createStringBtnPressed);
-    clearMarblesBtn.addEventListener('click', clearMarbles);
-    clearStringsBtn.addEventListener('click', clearStrings);
 }
 
-function placeMarbleBtnPressed() {
-    mode.marbles = true;
-    mode.strings = false;
-
-    placeMarbleBtn.style.background = buttonHighlight;
-    placeMarbleBtn.style.color = buttonHighlightText;
-    createStringBtn.style.background = 'white';
-    createStringBtn.style.color = 'black';
+function setMode(marblesActive) {
+    mode.marbles = marblesActive;
+    mode.strings = !marblesActive;
+    
+    applyButtonHighlight(document.getElementById('place-marble-btn'), marblesActive);
+    applyButtonHighlight(document.getElementById('create-string-btn'), !marblesActive);
 }
 
-function createStringBtnPressed() {
-    mode.marbles = false;
-    mode.strings = true;
-
-    placeMarbleBtn.style.background = 'white';
-    placeMarbleBtn.style.color = 'black';
-    createStringBtn.style.background = buttonHighlight;
-    createStringBtn.style.color = buttonHighlightText;
+function applyButtonHighlight(button, isActive) {
+    button.style.background = isActive ? buttonHighlight : 'white';
+    button.style.color = isActive ? buttonHighlightText : 'black';
 }
 
 function mousePressed() {
-    // Limits interaction to canvas area
-    if (mouseX < width && mouseY < height) {
-        if (mouseX > 0 && mouseY > 0) {
-            // Functionality depends on selected mode
-            if (mode.marbles) {
-                marbles.push(new Ball(mouseX, mouseY, random(10, 40)))
-            } else if (mode.strings) {
-                // strings.push(new String(mouseX, mouseY, width * 0.6, 20, 0.4));
-                if (mouseCount === 0) {
-                    stringPos1 = { x: mouseX, y: mouseY };
-                    // marbles.push(new Ball(stringPos1.x, stringPos1.y, 20));
-                    console.log(`stringPos1.x: ${stringPos1.x}`);
-                    mouseCount++;
-                } else if (mouseCount === 1) {
-                    stringPos2 = { x: mouseX, y: mouseY };
-                    // marbles.push(new Ball(stringPos2.x, stringPos2.y, 20));
-                    console.log(`stringPos2.x: ${stringPos2.x}`);
-                    mouseCount = 0;
-
-                    let midX = ((stringPos2.x - stringPos1.x) / 2) + stringPos1.x;
-                    // let midY = stringPos2.y - stringPos1.y;
-                    let midY = ((stringPos2.y - stringPos1.y) / 2) + stringPos1.y;
-                    let opp = stringPos2.y - stringPos1.y;
-                    let adj = stringPos2.x - stringPos1.x;
-                    let hyp = Math.sqrt(opp ** 2 + adj ** 2);
-
-                    let rotation = Math.asin(opp / hyp);
-                    console.log(rotation);
-                    strings.push(new String(midX, midY, hyp, 20, rotation));
-                    console.log(`midX: ${midX}`);
-                    // console.log(midY);
-
-                    // strings.push(new String(midX, midY, width * 0.6, 20, 0));
-                    // strings.push(new String(mouseX, mouseY, width * 0.6, 20, 0.4));
-                }
-            }
+    if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
+    
+    if (mode.marbles) {
+        marbles.push(new Ball(mouseX, mouseY, random(10, 40)));
+    } else {
+        if (mouseCount === 0) {
+            stringPos1 = { x: mouseX, y: mouseY };
+            mouseCount++;
         } else {
-            console.error('Error: Invalid mode selected');
+            stringPos2 = { x: mouseX, y: mouseY };
+            createStringBetweenPoints(stringPos1, stringPos2);
+            mouseCount = 0;
         }
     }
 }
 
-function generateBorders() {
-    const thickness = 50;
-
-    new Boundary(width / 2, (thickness / 2) * -1, width, thickness)
-    new Boundary((thickness / 2) * -1, height / 2, height, thickness, PI / 2);
-    new Boundary(width / 2, height + (thickness / 2), width, thickness);
-    new Boundary(width + (thickness / 2), height / 2, thickness, height);
+function createStringBetweenPoints(pos1, pos2) {
+    let midX = (pos2.x + pos1.x) / 2;
+    let midY = (pos2.y + pos1.y) / 2;
+    let opp = pos2.y - pos1.y;
+    let adj = pos2.x - pos1.x;
+    let hyp = Math.hypot(opp, adj);
+    let rotation = Math.asin(opp / hyp);
+    
+    strings.push(new String(midX, midY, hyp, 20, rotation));
 }
 
-// Empty marbles array
-function clearMarbles() {
-    for (const marble of marbles) {
-        marble.remove();
-    }
+function generateBorders() {
+    const thickness = 50;
+    new Boundary(width / 2, -thickness / 2, width, thickness);
+    new Boundary(-thickness / 2, height / 2, thickness, height);
+    new Boundary(width / 2, height + thickness / 2, width, thickness);
+    new Boundary(width + thickness / 2, height / 2, thickness, height);
+}
 
-    marbles.length = 0;
+function clearMarbles() {
+    marbles.forEach(marble => marble.remove());
+    marbles = [];
 }
 
 function clearStrings() {
-    for (const string of strings) {
-        string.remove();
-    }
-
-    strings.length = 0;
+    strings.forEach(string => string.remove());
+    strings = [];
 }
 
 function draw() {
     background(255);
     Engine.update(engine);
-
-    for (const string of strings) {
-        string.show();
-    }
-
-    for (const marble of marbles) {
-        marble.show();
-    }
+    strings.forEach(string => string.show());
+    marbles.forEach(marble => marble.show());
 }
