@@ -5,8 +5,7 @@ class Ball {
         this.r = r;
         let options = {
             friction: 0.1,
-            restitution: 0.6,
-            isStatic: true
+            restitution: 0.6
         }
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);
 

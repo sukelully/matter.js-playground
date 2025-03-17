@@ -118,7 +118,13 @@ function mousePressed() {
                     let midX = ((stringPos2.x - stringPos1.x) / 2) + stringPos1.x;
                     // let midY = stringPos2.y - stringPos1.y;
                     let midY = ((stringPos2.y - stringPos1.y) / 2) + stringPos1.y;
-                    strings.push(new String(midX, midY, width * 0.6, 20, 0));
+                    let opp = stringPos2.y - stringPos1.y;
+                    let adj = stringPos2.x - stringPos1.x;
+                    let hyp = Math.sqrt(opp ** 2 + adj ** 2);
+
+                    let rotation = Math.asin(opp/ hyp);
+                    console.log(rotation);
+                    strings.push(new String(midX, midY, width * 0.6, 20, rotation));
                     console.log(`midX: ${midX}`);
                     // console.log(midY);
 
