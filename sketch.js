@@ -18,7 +18,7 @@ function setup() {
     generateBorders();
     
     strings.push(new Boundary(150, 100, width * 0.6, 20, 0.4));
-    marbles.push(new Ball(50, 50, 50));
+    marbles.push(new Marble(50, 50, 50));
 }
 
 function setupUI() {
@@ -58,10 +58,11 @@ function applyButtonHighlight(button, isActive) {
 }
 
 function mousePressed() {
+    // Limit mouse presses to canvas area
     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
     
     if (mode.marbles) {
-        marbles.push(new Ball(mouseX, mouseY, random(10, 40)));
+        marbles.push(new Marble(mouseX, mouseY, random(10, 40)));
     } else {
         if (mouseCount === 0) {
             stringPos1 = { x: mouseX, y: mouseY };
@@ -75,12 +76,12 @@ function mousePressed() {
 }
 
 function createStringBetweenPoints(pos1, pos2) {
-    let midX = (pos2.x + pos1.x) / 2;
-    let midY = (pos2.y + pos1.y) / 2;
-    let opp = pos2.y - pos1.y;
-    let adj = pos2.x - pos1.x;
-    let hyp = Math.hypot(opp, adj);
-    let rotation = Math.asin(opp / hyp);
+    const midX = (pos2.x + pos1.x) / 2;
+    const midY = (pos2.y + pos1.y) / 2;
+    const opp = pos2.y - pos1.y;
+    const adj = pos2.x - pos1.x;
+    const hyp = Math.hypot(opp, adj);
+    const rotation = Math.asin(opp / hyp);
     
     strings.push(new String(midX, midY, hyp, 20, rotation));
 }
