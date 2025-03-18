@@ -3,3 +3,5 @@
 - [ ] Get rid of old classes (boundary.js) and rename ball.js to marble.js
 - [ ] Random pastel coloured marbles
 - [ ] Snap to grid (eg divisible by 10)
+- [ ] Rounded corner boundaries
+- [ ] Better create string mode (eg click and drag)
