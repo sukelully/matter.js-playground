@@ -18,7 +18,7 @@ function setup() {
     generateBorders();
     
     strings.push(new Boundary(150, 100, width * 0.6, 20, 0.4));
-    marbles.push(new Marble(50, 50, 50));
+    marbles.push(new Marble(50, 50, 30));
 }
 
 function setupUI() {
@@ -53,7 +53,7 @@ function setMode(marblesActive) {
 }
 
 function applyButtonHighlight(button, isActive) {
-    button.style.background = isActive ? buttonHighlight : 'white';
+    button.style.background = isActive ? buttonHighlight : '#efefef';
     button.style.color = isActive ? buttonHighlightText : 'black';
 }
 
