@@ -92,6 +92,9 @@ function generateBorders() {
     new Boundary(-thickness / 2, height / 2, thickness, height);
     new Boundary(width / 2, height + thickness / 2, width, thickness);
     new Boundary(width + thickness / 2, height / 2, thickness, height);
+
+    // Rounded corners attempt
+    strings.push(new String(50, 50, 20, 100));
 }
 
 function clearMarbles() {

@@ -6,8 +6,8 @@ class Marble {
         this.colour = Marble.getRandomColour();
 
         let options = {
-            friction: 0.1,
-            restitution: 0.6
+            friction: 0,
+            restitution: 1
         }
 
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);
