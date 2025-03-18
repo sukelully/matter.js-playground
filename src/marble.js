@@ -11,13 +11,11 @@ class Marble {
         }
 
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);
-
         Composite.add(world, this.body);
     }
 
     static getRandomColour() {
         const colours = ['#d2f1e4', '#fbcaef', '#acf39d', '#f2dc5d', '#f2a359'];
-
         return colours[Math.floor(Math.random() * colours.length)];
     }
 
@@ -29,10 +27,19 @@ class Marble {
         rotate(angle);
         rectMode(CENTER);
         strokeWeight(1);
-        stroke(255)
+        stroke(255);
         fill(this.colour);
         ellipse(0, 0, this.r);
         pop();
+    }
+
+    update() {
+        let pos = this.body.position;
+        let velocity = this.body.velocity;
+
+        if (!isWithinCanvas(pos.x, pos.y, 100)) {
+            console.log('outta bounds');
+        }
     }
 
     remove() {

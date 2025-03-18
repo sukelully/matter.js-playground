@@ -11,13 +11,14 @@ let stringPos1, stringPos2;
 const mode = { marbles: true, strings: false };
 
 function setup() {
+    // frameRate(15);
     setupUI();
     createCanvas(800, 800);
     engine = Engine.create();
     world = engine.world;
     generateBorders();
 
-    strings.push(new Boundary(150, 100, width * 0.6, 20, 0.4));
+    strings.push(new String(150, 100, width * 0.6, 20, 0.4));
     marbles.push(new Marble(50, 50, 30));
 }
 
@@ -63,7 +64,7 @@ function mousePressed() {
 
     if (mode.marbles) {
         marbles.push(new Marble(mouseX, mouseY, random(10, 40)));
-        console.log(isWithinCanvas(mouseX, mouseY, 100));
+        // console.log(isWithinCanvas(mouseX, mouseY, 100));
     } else {
         if (mouseCount === 0) {
             stringPos1 = { x: mouseX, y: mouseY };
@@ -108,15 +109,12 @@ function createStringBetweenPoints(pos1, pos2) {
 
     let opp = pos2.y - pos1.y;
     let adj = pos2.x - pos1.x;
-    // if (opp < 0) {
-    //     opp *= -1;
-    // }
-    // console.log(opp, adj);
-    const hyp = Math.hypot(opp, adj);
+
     if (adj < 0) {
         opp *= -1;
     }
-    console.log(opp);
+    
+    const hyp = Math.hypot(opp, adj);
     const rotation = Math.asin(opp / hyp);
 
     strings.push(new String(midX, midY, hyp, 20, rotation));
@@ -153,5 +151,16 @@ function draw() {
     background(255);
     Engine.update(engine);
     strings.forEach(string => string.show());
-    marbles.forEach(marble => marble.show());
+    marbles.forEach(marble => {
+        marble.show();
+        marble.update();
+    });
+
+    Matter.Events.on(engine, 'collisionStart', function(event) {
+        event.pairs.forEach(pair => {
+            if (pair.bodyA.label === "string" || pair.bodyB.label === "string") {
+                console.log("collision detected with string", pair.bodyA, pair.bodyB);
+            }
+        })
+    })
 }
