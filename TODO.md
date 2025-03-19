@@ -5,3 +5,4 @@
 - [ ] Snap to grid (eg divisible by 10)
 - [x] Rounded corner boundaries
 - [ ] Better create string mode (eg click and drag)
+- [x] Basic karplus-strong implementation

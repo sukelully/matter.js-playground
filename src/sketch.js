@@ -39,7 +39,6 @@ function handleCollision(event) {
             (bodyA.label === 'string' && bodyB.label === 'marble');
 
         if (isMarbleAndString) {
-            console.log('Collision detected between a marble and a string:', bodyA, bodyB);
             playFreq(440);
         }
     });
@@ -121,7 +120,7 @@ function mousePressed() {
     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
 
     if (mode.marbles) {
-        marbles.push(new Marble(mouseX, mouseY, random(10, 40)));
+        marbles.push(new Marble(mouseX, mouseY, 30));
         // console.log(isWithinCanvas(mouseX, mouseY, 100));
     } else {
         if (mouseCount === 0) {
@@ -130,9 +129,22 @@ function mousePressed() {
         } else {
             stringPos2 = { x: mouseX, y: mouseY };
             createLineBetweenPoints(strings, stringPos1, stringPos2);
+            createString(stringPos1, stringPos2);
             mouseCount = 0;
         }
     }
+}
+
+function createString(pos1, pos2) {
+    const ballOptions = {
+        isStatic: true
+    }
+
+    const point1 = Bodies.circle(pos1.x, pos1.y, 20, ballOptions);
+    Composite.add(world, point1);
+    rectMode(CENTER);
+    fill(0);
+    ellipse(pos1.x, pos1.y, 20);
 }
 
 // Returns boolean indicating whether the provided coordinates are within the canvas
@@ -175,7 +187,7 @@ function createLineBetweenPoints(arr, pos1, pos2) {
     const hyp = Math.hypot(opp, adj);
     const rotation = Math.asin(opp / hyp);
 
-    if (arr === 'strings') {
+    if (arr === strings) {
         arr.push(new String(midX, midY, hyp, 20, rotation));
     } else {
         arr.push(new Boundary(midX, midY, hyp, 20, rotation));

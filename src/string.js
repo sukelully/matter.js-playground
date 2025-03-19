@@ -27,6 +27,12 @@ class String {
         noStroke();
         fill(0);
         rect(0, 0, this.w, this.h);
+    
+        // Draw circles at the ends of the string
+        fill(0);
+        ellipse(-this.w / 2, 0, 30); // Circle at the left end
+        ellipse(this.w / 2, 0, 30);  // Circle at the right end
+    
         pop();
     }
 

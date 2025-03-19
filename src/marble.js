@@ -7,6 +7,7 @@ class Marble {
 
         let options = {
             friction: 0,
+            frictionAir: 0,
             restitution: 1,
             label: 'marble'
         }
