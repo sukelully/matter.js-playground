@@ -1,7 +1,7 @@
 - [ ] Refactor sketch.js to use other classes where possible, eg move setupUI elsewhere
 - [ ] Refactor mousePressed() to use another function
-- [ ] Get rid of old classes (boundary.js) and rename ball.js to marble.js
-- [ ] Random pastel coloured marbles
+- [x] Get rid of old classes (boundary.js) and rename ball.js to marble.js
+- [x] Random pastel coloured marbles
 - [ ] Snap to grid (eg divisible by 10)
-- [ ] Rounded corner boundaries
+- [x] Rounded corner boundaries
 - [ ] Better create string mode (eg click and drag)

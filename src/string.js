@@ -8,7 +8,8 @@ class String {
             friction: 0,
             restitution: 1,
             angle: a,
-            isStatic: true
+            isStatic: true,
+            label: 'string'
         }
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
 

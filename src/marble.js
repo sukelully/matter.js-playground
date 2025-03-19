@@ -7,7 +7,8 @@ class Marble {
 
         let options = {
             friction: 0,
-            restitution: 1
+            restitution: 1,
+            label: 'marble'
         }
 
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);

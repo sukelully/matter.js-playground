@@ -20,6 +20,25 @@ function setup() {
 
     strings.push(new String(150, 100, width * 0.6, 20, 0.4));
     marbles.push(new Marble(50, 50, 30));
+
+    Matter.Events.on(engine, 'collisionStart', handleCollision);
+}
+
+function handleCollision(event) {
+    const pairs = event.pairs;
+
+    pairs.forEach(pair => {
+        const { bodyA, bodyB } = pair;
+
+        // Check if one body is a marble and the other is a string
+        const isMarbleAndString =
+            (bodyA.label === 'marble' && bodyB.label === 'string') ||
+            (bodyA.label === 'string' && bodyB.label === 'marble');
+
+        if (isMarbleAndString) {
+            console.log('Collision detected between a marble and a string:', bodyA, bodyB);
+        }
+    });
 }
 
 function setupUI() {
@@ -117,7 +136,11 @@ function createLineBetweenPoints(arr, pos1, pos2) {
     const hyp = Math.hypot(opp, adj);
     const rotation = Math.asin(opp / hyp);
 
-    arr.push(new String(midX, midY, hyp, 20, rotation));
+    if (arr === 'strings') {
+        arr.push(new String(midX, midY, hyp, 20, rotation));
+    } else {
+        arr.push(new Boundary(midX, midY, hyp, 20, rotation));
+    }
 }
 
 function generateBorders() {
@@ -166,18 +189,10 @@ function clearStrings() {
 function draw() {
     background(255);
     Engine.update(engine);
+
     strings.forEach(string => string.show());
-    borders.forEach(border => border.show());
     marbles.forEach(marble => {
         marble.show();
         marble.update();
     });
-
-    Matter.Events.on(engine, 'collisionStart', function(event) {
-        event.pairs.forEach(pair => {
-            if (pair.bodyA.label === "string" || pair.bodyB.label === "string") {
-                console.log("collision detected with string", pair.bodyA, pair.bodyB);
-            }
-        })
-    })
 }
