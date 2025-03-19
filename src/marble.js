@@ -21,7 +21,7 @@ class Marble {
         return colours[Math.floor(Math.random() * colours.length)];
     }
 
-    show() {
+    draw() {
         let pos = this.body.position;
         let angle = this.body.angle;
         push();

@@ -16,7 +16,14 @@ const mode = { marbles: true, strings: false };
 function setup() {
     // frameRate(15);
     setupUI();
-    createCanvas(800, 800);
+    if (screen.width > 1024) {
+        createCanvas(800, 800);
+    } else if (screen.width > 640) {
+        createCanvas(600, 600);
+    } else {
+        createCanvas(400, 400);
+    }
+    console.log(screen.width);
     engine = Engine.create();
     world = engine.world;
     generateBorders();
@@ -241,9 +248,26 @@ function draw() {
     background(255);
     Engine.update(engine);
 
-    strings.forEach(string => string.show());
+    strings.forEach(string => string.draw());
+    borders.forEach(borders => borders.draw());
     marbles.forEach(marble => {
-        marble.show();
+        marble.draw();
         marble.update();
     });
 }
+
+window.addEventListener('resize', () => {
+    if (screen.width > 1024) {
+        createCanvas(800, 800);
+        borders = [];
+        generateBorders();
+    } else if (screen.width > 640) {
+        createCanvas(600, 600);
+        borders = [];
+        generateBorders();
+    } else {
+        createCanvas(400, 400);
+        borders = [];
+        generateBorders();
+    }
+});

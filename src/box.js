@@ -13,7 +13,7 @@ class Box {
         Composite.add(world, this.body);
     }
 
-    show() {
+    draw() {
         let pos = this.body.position;
         let angle = this.body.angle;
         push();
