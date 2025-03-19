@@ -246,6 +246,7 @@ function clearStrings() {
 
 function draw() {
     background(255);
+    // frameRate(15);
     Engine.update(engine);
 
     strings.forEach(string => string.draw());
@@ -256,6 +257,7 @@ function draw() {
     });
 }
 
+// Add corner smoothing to new coordinates when canvas is resized
 window.addEventListener('resize', () => {
     if (screen.width > 1024) {
         createCanvas(800, 800);
