@@ -15,8 +15,6 @@ function setup() {
     setupUI();
     createCanvas(800, 800);
     engine = Engine.create();
-    engine.world.gravity.x = -0.5;
-    engine.world.gravity.y = -.5;
     world = engine.world;
     generateBorders();
 
@@ -129,24 +127,31 @@ function generateBorders() {
     new Boundary(width / 2, height + thickness / 2, width, thickness);
     new Boundary(width + thickness / 2, height / 2, thickness, height);
 
-    createCornerBorder();
-
+    createCornerBorders();
 }
 
-function createCornerBorder() {
-    const radius = 100;
-
-    const corners = [
-        { cx: radius, cy: radius },                     // Top-left
-        { cx: width - radius, cy: radius },             // Top-right
-        { cx: radius, cy: height - radius },            // Bottom-left
-        { cx: width - radius, cy: height - radius }     // Bottom-right
-    ];
-
-    // Top left corner
+function createCornerBorders() {
+    // Top-left corner
     createLineBetweenPoints(borders, {x: -6, y: 50}, {x: 50, y: -6});
     createLineBetweenPoints(borders, {x: 0, y: 25}, {x: 75, y: -10});
+    createLineBetweenPoints(borders, {x: -10, y: 75}, {x: 25, y: 0});
+    
+    // Top-right corner
+    createLineBetweenPoints(borders, {x: width + 6, y: 50}, {x: width - 50, y: -6});
+    createLineBetweenPoints(borders, {x: width, y: 25}, {x: width - 75, y: -10});
+    createLineBetweenPoints(borders, {x: width + 10, y: 75}, {x: width - 25, y: 0});
+    
+    // Bottom-left corner
+    createLineBetweenPoints(borders, {x: -6, y: height - 50}, {x: 50, y: height + 6});
+    createLineBetweenPoints(borders, {x: 0, y: height - 25}, {x: 75, y: height + 10});
+    createLineBetweenPoints(borders, {x: -10, y: height - 75}, {x: 25, y: height});
+    
+    // Bottom-right corner
+    createLineBetweenPoints(borders, {x: width + 6, y: height - 50}, {x: width - 50, y: height + 6});
+    createLineBetweenPoints(borders, {x: width, y: height - 25}, {x: width - 75, y: height + 10});
+    createLineBetweenPoints(borders, {x: width + 10, y: height - 75}, {x: width - 25, y: height});
 }
+
 
 function clearMarbles() {
     marbles.forEach(marble => marble.remove());
