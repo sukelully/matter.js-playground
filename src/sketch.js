@@ -8,6 +8,9 @@ let buttonHighlightText = 'white';
 let mouseCount = 0;
 let stringPos1, stringPos2;
 
+let audioContext;
+let source;
+
 const mode = { marbles: true, strings: false };
 
 function setup() {
@@ -37,8 +40,44 @@ function handleCollision(event) {
 
         if (isMarbleAndString) {
             console.log('Collision detected between a marble and a string:', bodyA, bodyB);
+            playFreq(440);
         }
     });
+}
+
+function playFreq(freq) {
+    if (!audioContext) {
+        audioContext = new AudioContext();
+    }
+
+    // Delay line buffer
+    const delaySamples = Math.round(audioContext.sampleRate / freq);
+    const delayBuffer = new Float32Array(delaySamples);
+    let dbIndex = 0;
+
+    // 7s output buffer
+    const bufferSize = audioContext.sampleRate * 7;
+    const outputBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+    const output = outputBuffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        const noiseBurst = audioContext.sampleRate / 100;
+        const sample = (i < noiseBurst) ? Math.random() * 2 * 0.2 - 0.2 : 0;
+
+        // Apply lowpass by averaging adjacent delay line samples
+        delayBuffer[dbIndex] = sample + 0.99 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
+        output[i] = delayBuffer[dbIndex];
+
+        // Loop delay buffer
+        if (++dbIndex >= delaySamples) {
+            dbIndex = 0;
+        }
+    }
+
+    source = audioContext.createBufferSource();
+    source.buffer = outputBuffer;
+    source.connect(audioContext.destination);
+    source.start();
 }
 
 function setupUI() {
