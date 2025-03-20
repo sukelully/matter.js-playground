@@ -46,7 +46,16 @@ function handleCollision(event) {
             (bodyA.label === 'string' && bodyB.label === 'marble');
 
         if (isMarbleAndString) {
-            playFreq(440);
+            // Identify the string involved in the collision
+            const stringBody = bodyA.label === 'string' ? bodyA : bodyB;
+
+            // Find the corresponding String instance
+            const stringInstance = strings.find(string => string.body === stringBody);
+
+            if (stringInstance) {
+                // Call the play method of the String instance
+                stringInstance.play(440); // Pass the desired frequency
+            }
         }
     });
 }

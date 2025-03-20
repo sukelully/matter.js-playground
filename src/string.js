@@ -10,7 +10,7 @@ class String {
             angle: a,
             isStatic: true,
             label: 'string'
-        }
+        };
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
 
         Composite.add(world, this.body);
@@ -34,6 +34,41 @@ class String {
         ellipse(this.w / 2, 0, 30);  // Circle at the right end
     
         pop();
+    }
+
+    play(freq) {
+        // Initialize audioContext if it doesn't exist
+        if (!audioContext) {
+            audioContext = new AudioContext();
+        }
+
+        const delaySamples = Math.round(audioContext.sampleRate / freq);
+        const delayBuffer = new Float32Array(delaySamples);
+        let dbIndex = 0;
+
+        // 7s output buffer
+        const bufferSize = audioContext.sampleRate * 7;
+        const outputBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const output = outputBuffer.getChannelData(0);
+
+        for (let i = 0; i < bufferSize; i++) {
+            const noiseBurst = audioContext.sampleRate / 100;
+            const sample = (i < noiseBurst) ? Math.random() * 2 * 0.2 - 0.2 : 0;
+
+            // Apply lowpass by averaging adjacent delay line samples
+            delayBuffer[dbIndex] = sample + 0.99 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
+            output[i] = delayBuffer[dbIndex];
+
+            // Loop delay buffer
+            if (++dbIndex >= delaySamples) {
+                dbIndex = 0;
+            }
+        }
+
+        const source = audioContext.createBufferSource();
+        source.buffer = outputBuffer;
+        source.connect(audioContext.destination);
+        source.start();
     }
 
     remove() {
