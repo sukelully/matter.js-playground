@@ -6,3 +6,4 @@
 - [x] Rounded corner boundaries
 - [ ] Better create string mode (eg click and drag)
 - [x] Basic karplus-strong implementation
+- [ ] Improve border rounding on mobile mode

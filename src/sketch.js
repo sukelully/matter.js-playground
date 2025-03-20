@@ -202,10 +202,10 @@ function createLineBetweenPoints(arr, pos1, pos2) {
 
 function generateBorders() {
     const thickness = 50;
-    new Boundary(width / 2, -thickness / 2, width, thickness);
-    new Boundary(-thickness / 2, height / 2, thickness, height);
-    new Boundary(width / 2, height + thickness / 2, width, thickness);
-    new Boundary(width + thickness / 2, height / 2, thickness, height);
+    borders.push(new Boundary(width / 2, -thickness / 2, width, thickness));
+    borders.push(new Boundary(-thickness / 2, height / 2, thickness, height));
+    borders.push(new Boundary(width / 2, height + thickness / 2, width, thickness));
+    borders.push(new Boundary(width + thickness / 2, height / 2, thickness, height));
 
     createCornerBorders();
 }
@@ -243,13 +243,19 @@ function clearStrings() {
     strings = [];
 }
 
+function clearBorders() {
+    borders.forEach(border => border.remove());
+    borders = [];
+}
+
 function draw() {
+    clear();
     background(255);
     // frameRate(15);
     Engine.update(engine);
 
     strings.forEach(string => string.draw());
-    // borders.forEach(borders => borders.draw());
+    borders.forEach(borders => borders.draw());
     marbles.forEach(marble => {
         marble.draw();
         marble.update();
@@ -258,18 +264,13 @@ function draw() {
 
 // Add corner smoothing to new coordinates when canvas is resized
 window.addEventListener('resize', () => {
+    clearBorders();
     if (screen.width > 1024) {
         createCanvas(800, 800);
-        borders = [];
-        generateBorders();
     } else if (screen.width > 640) {
         createCanvas(600, 600);
-        borders = [];
-        generateBorders();
     } else {
-        console.log(screen.width, screen.height - 200);
         createCanvas(screen.width - 100, screen.height - 200);
-        borders = [];
-        generateBorders();
     }
+    generateBorders();
 });
