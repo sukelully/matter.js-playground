@@ -36,13 +36,14 @@ button {
 }
 
 canvas {
-    /* border-radius: 100px; */
+    border-radius: 100px;
 }
 
 @media only screen and (max-width: 640px) {
     body {
         display: flex;
         flex-direction: column;
+        gap: 0;
     }
 
     #controls-container {
@@ -51,7 +52,11 @@ canvas {
         flex-wrap: wrap;
         justify-content: center;
         gap: 1em;
-        border: 2px solid black;
+        /* border: 2px solid black; */
+    }
+
+    canvas {
+        padding: 1em;
     }
 }
 

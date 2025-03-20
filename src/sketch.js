@@ -21,9 +21,9 @@ function setup() {
     } else if (screen.width > 640) {
         createCanvas(600, 600);
     } else {
-        createCanvas(400, 400);
+        createCanvas(screen.width - 50, screen.height - 200);
     }
-    console.log(screen.width);
+
     engine = Engine.create();
     world = engine.world;
     generateBorders();
@@ -128,7 +128,6 @@ function mousePressed() {
 
     if (mode.marbles) {
         marbles.push(new Marble(mouseX, mouseY, 30));
-        // console.log(isWithinCanvas(mouseX, mouseY, 100));
     } else {
         if (mouseCount === 0) {
             stringPos1 = { x: mouseX, y: mouseY };
@@ -250,7 +249,7 @@ function draw() {
     Engine.update(engine);
 
     strings.forEach(string => string.draw());
-    borders.forEach(borders => borders.draw());
+    // borders.forEach(borders => borders.draw());
     marbles.forEach(marble => {
         marble.draw();
         marble.update();
@@ -268,7 +267,8 @@ window.addEventListener('resize', () => {
         borders = [];
         generateBorders();
     } else {
-        createCanvas(400, 400);
+        console.log(screen.width, screen.height - 200);
+        createCanvas(screen.width - 100, screen.height - 200);
         borders = [];
         generateBorders();
     }
