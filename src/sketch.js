@@ -236,6 +236,7 @@ function draw() {
 }
 
 // Draw canvas to nearest 10 or 100 to ensure grid works correctly
+// 
 function drawCanvas() {
     const screenWidthCutoff = screen.width % 100;
     const screenHeightCutoff = screen.height % 100;
@@ -243,6 +244,7 @@ function drawCanvas() {
     const screenHeight = screen.height - screenHeightCutoff;
     const controlsContainer = document.getElementById('controls-container');
     const heightAdjust = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
+    // const widthAdjust = Math
 
     if (screen.width > screen.height) {
         if (screen.width > 640) {
@@ -254,15 +256,19 @@ function drawCanvas() {
     } else {
         if (screen.width > 640) {
             // For screens wider than 640px, make the canvas square
-            createCanvas(screenWidth, screenHeight);
+            createCanvas(screenWidth, screenWidth);
+            console.log('test');
         } else {
             createCanvas(screenWidth, heightAdjust);
         }
     }
+    
+    // Get width of canvas and controls container
+    const canvasControlsWidth = (body.offsetWidth > body.offsetHeight) ? 
+    width + 200:
+    width + controlsContainer.offsetWidth;
 
-    const canvasControlsWidth = width + controlsContainer.offsetWidth + 70;
     if (canvasControlsWidth > screen.width) {
-        console.log('test');
         body.style.flexDirection = 'column';
         body.style.gap = '1em';
         controlsContainer.style.flexDirection = 'row';
