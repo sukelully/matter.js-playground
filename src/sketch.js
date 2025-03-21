@@ -260,17 +260,20 @@ function drawCanvas() {
         }
     }
 
-    const canvasControlsWidth = width + controlsContainer.offsetWidth + 100;
+    const canvasControlsWidth = width + controlsContainer.offsetWidth + 70;
     if (canvasControlsWidth > screen.width) {
         console.log('test');
         body.style.flexDirection = 'column';
+        body.style.gap = '1em';
         controlsContainer.style.flexDirection = 'row';
         controlsContainer.style.flexWrap = 'wrap';
         controlsContainer.style.justifyContent = 'center';
+        if (screen.width > 640) createCanvas(heightAdjust, heightAdjust);
     } else {
         body.style.flexDirection = 'row';
+        body.style.gap = '3em';
         controlsContainer.style.flexDirection = 'column';
-        
+
     }
     // console.log(`canvas and control width: ${canvasControlsWidth}`);
     // console.log(`screen width: ${screen.width}`);
