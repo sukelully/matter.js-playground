@@ -235,16 +235,45 @@ function draw() {
     marbles.forEach(marble => marble.draw());
 }
 
+// Draw canvas to nearest 10 or 100 to ensure grid works correctly
 function drawCanvas() {
-    if (screen.width > 640) {
-        // For screens wider than 640px, make the canvas square
-        const screenCutoff = screen.height % 100;
-        const screenHeight = screen.height - screenCutoff;
-        createCanvas(screenHeight, screenHeight);
+    const screenWidthCutoff = screen.width % 100;
+    const screenHeightCutoff = screen.height % 100;
+    const screenWidth = screen.width - screenWidthCutoff;
+    const screenHeight = screen.height - screenHeightCutoff;
+    const controlsContainer = document.getElementById('controls-container');
+    const heightAdjust = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
+
+    if (screen.width > screen.height) {
+        if (screen.width > 640) {
+            // For screens wider than 640px, make the canvas square
+            createCanvas(screenHeight, screenHeight);
+        } else {
+            createCanvas(screenWidth, heightAdjust);
+        }
     } else {
-        // For smaller screens, leave room for controls at the bottom
-        const width = screen.width - 20; // Add some padding
-        const height = screen.height * 0.7; // Use 70% of the screen height
-        createCanvas(width, height);
+        if (screen.width > 640) {
+            // For screens wider than 640px, make the canvas square
+            createCanvas(screenWidth, screenHeight);
+        } else {
+            createCanvas(screenWidth, heightAdjust);
+        }
     }
+
+    const canvasControlsWidth = width + controlsContainer.offsetWidth + 100;
+    if (canvasControlsWidth > screen.width) {
+        console.log('test');
+        body.style.flexDirection = 'column';
+        controlsContainer.style.flexDirection = 'row';
+        controlsContainer.style.flexWrap = 'wrap';
+        controlsContainer.style.justifyContent = 'center';
+    } else {
+        body.style.flexDirection = 'row';
+        controlsContainer.style.flexDirection = 'column';
+        
+    }
+    // console.log(`canvas and control width: ${canvasControlsWidth}`);
+    // console.log(`screen width: ${screen.width}`);
+    // console.log(`body width: ${body.offsetWidth}`);
+    
 }
