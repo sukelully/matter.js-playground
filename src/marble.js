@@ -35,15 +35,6 @@ class Marble {
         pop();
     }
 
-    update() {
-        let pos = this.body.position;
-        let velocity = this.body.velocity;
-
-        if (!isWithinCanvas(pos.x, pos.y, 100)) {
-            console.log('outta bounds');
-        }
-    }
-
     remove() {
         Composite.remove(world, this.body);
     }

@@ -1,6 +1,8 @@
+// Import Matter.js modules
 const { Engine, World, Bodies, Composite } = Matter;
-const body = document.querySelector('body');
 
+// DOM and global variables
+const body = document.querySelector('body');
 let engine, world;
 let strings = [], marbles = [], borders = [];
 let buttonHighlight = '#252525';
@@ -11,11 +13,14 @@ let stringPos1, stringPos2;
 let audioContext;
 let source;
 
+// Mode toggles for placing marbles or creating strings
 const mode = { marbles: true, strings: false };
 
+// Setup function initializes the canvas, physics engine, and UI
 function setup() {
-    // frameRate(15);
     setupUI();
+
+    // Adjust canvas size based on screen width
     if (screen.width > 1024) {
         createCanvas(800, 800);
     } else if (screen.width > 640) {
@@ -24,16 +29,20 @@ function setup() {
         createCanvas(screen.width - 50, screen.height - 200);
     }
 
+    // Initialize Matter.js engine and world
     engine = Engine.create();
     world = engine.world;
-    generateBorders();
 
+    // Generate borders and add initial objects
+    generateBorders();
     strings.push(new String(150, 100, width * 0.6, 20, 0.4));
     marbles.push(new Marble(50, 50, 30));
 
+    // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', handleCollision);
 }
 
+// Handles collisions between marbles and strings
 function handleCollision(event) {
     const pairs = event.pairs;
 
@@ -46,55 +55,18 @@ function handleCollision(event) {
             (bodyA.label === 'string' && bodyB.label === 'marble');
 
         if (isMarbleAndString) {
-            // Identify the string involved in the collision
             const stringBody = bodyA.label === 'string' ? bodyA : bodyB;
 
-            // Find the corresponding String instance
+            // Find the corresponding String instance and play sound
             const stringInstance = strings.find(string => string.body === stringBody);
-
             if (stringInstance) {
-                // Call the play method of the String instance
-                stringInstance.play(440); // Pass the desired frequency
+                stringInstance.play(440); // Play sound at 440 Hz
             }
         }
     });
 }
 
-function playFreq(freq) {
-    if (!audioContext) {
-        audioContext = new AudioContext();
-    }
-
-    // Delay line buffer
-    const delaySamples = Math.round(audioContext.sampleRate / freq);
-    const delayBuffer = new Float32Array(delaySamples);
-    let dbIndex = 0;
-
-    // 7s output buffer
-    const bufferSize = audioContext.sampleRate * 7;
-    const outputBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-    const output = outputBuffer.getChannelData(0);
-
-    for (let i = 0; i < bufferSize; i++) {
-        const noiseBurst = audioContext.sampleRate / 100;
-        const sample = (i < noiseBurst) ? Math.random() * 2 * 0.2 - 0.2 : 0;
-
-        // Apply lowpass by averaging adjacent delay line samples
-        delayBuffer[dbIndex] = sample + 0.99 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
-        output[i] = delayBuffer[dbIndex];
-
-        // Loop delay buffer
-        if (++dbIndex >= delaySamples) {
-            dbIndex = 0;
-        }
-    }
-
-    source = audioContext.createBufferSource();
-    source.buffer = outputBuffer;
-    source.connect(audioContext.destination);
-    source.start();
-}
-
+// Sets up the UI with buttons for different actions
 function setupUI() {
     const controlsContainer = document.createElement('div');
     controlsContainer.id = 'controls-container';
@@ -110,7 +82,10 @@ function setupUI() {
         const btn = document.createElement('button');
         btn.id = id;
         btn.textContent = text;
+
+        // Highlight the "Place Marble" button by default
         if (id === 'place-marble-btn') applyButtonHighlight(btn, true);
+
         btn.addEventListener('click', handler);
         controlsContainer.appendChild(btn);
     });
@@ -118,6 +93,7 @@ function setupUI() {
     body.appendChild(controlsContainer);
 }
 
+// Toggles between marble and string placement modes
 function setMode(marblesActive) {
     mode.marbles = marblesActive;
     mode.strings = !marblesActive;
@@ -126,11 +102,13 @@ function setMode(marblesActive) {
     applyButtonHighlight(document.getElementById('create-string-btn'), !marblesActive);
 }
 
+// Highlights the active button
 function applyButtonHighlight(button, isActive) {
     button.style.background = isActive ? buttonHighlight : '#efefef';
     button.style.color = isActive ? buttonHighlightText : 'black';
 }
 
+// Handles mouse press events for placing marbles or creating strings
 function mousePressed() {
     // Limit mouse presses to canvas area
     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
@@ -150,31 +128,22 @@ function mousePressed() {
     }
 }
 
+// Creates a static point and visual representation for a string
 function createString(pos1, pos2) {
-    const ballOptions = {
-        isStatic: true
-    }
-
+    const ballOptions = { isStatic: true };
     const point1 = Bodies.circle(pos1.x, pos1.y, 20, ballOptions);
     Composite.add(world, point1);
+
     rectMode(CENTER);
     fill(0);
     ellipse(pos1.x, pos1.y, 20);
 }
 
-// Returns boolean indicating whether the provided coordinates are within the canvas
-// (accounting for border rounding)
+// Checks if coordinates are within the canvas, accounting for rounded corners
 function isWithinCanvas(x, y, radius) {
+    if (x >= 0 && x <= width && y >= radius && y <= height - radius) return true;
+    if (x >= radius && x <= width - radius && y >= 0 && y <= height) return true;
 
-    if (x >= 0 && x <= width && y >= radius && y <= height - radius) {
-        return true;
-    }
-
-    if (x >= radius && x <= width - radius && y >= 0 && y <= height) {
-        return true;
-    }
-
-    // Define corner centers
     const corners = [
         { cx: radius, cy: radius },                     // Top-left
         { cx: width - radius, cy: radius },             // Top-right
@@ -182,12 +151,10 @@ function isWithinCanvas(x, y, radius) {
         { cx: width - radius, cy: height - radius }     // Bottom-right
     ];
 
-    // Check if entity is inside any rounded corner
-    return corners.some(({ cx, cy }) => {
-        return (x - cx) ** 2 + (y - cy) ** 2 < radius ** 2;
-    });
+    return corners.some(({ cx, cy }) => (x - cx) ** 2 + (y - cy) ** 2 < radius ** 2);
 }
 
+// Creates a line between two points and adds it to the specified array
 function createLineBetweenPoints(arr, pos1, pos2) {
     const midX = (pos2.x + pos1.x) / 2;
     const midY = (pos2.y + pos1.y) / 2;
@@ -195,10 +162,8 @@ function createLineBetweenPoints(arr, pos1, pos2) {
     let opp = pos2.y - pos1.y;
     let adj = pos2.x - pos1.x;
 
-    if (adj < 0) {
-        opp *= -1;
-    }
-    
+    if (adj < 0) opp *= -1;
+
     const hyp = Math.hypot(opp, adj);
     const rotation = Math.asin(opp / hyp);
 
@@ -209,6 +174,7 @@ function createLineBetweenPoints(arr, pos1, pos2) {
     }
 }
 
+// Generates borders around the canvas
 function generateBorders() {
     const thickness = 50;
     borders.push(new Boundary(width / 2, -thickness / 2, width, thickness));
@@ -219,62 +185,64 @@ function generateBorders() {
     createCornerBorders();
 }
 
+// Creates corner borders with angled lines
 function createCornerBorders() {
     // Top-left corner
-    createLineBetweenPoints(borders, {x: -6, y: 50}, {x: 50, y: -6});
-    createLineBetweenPoints(borders, {x: 0, y: 25}, {x: 75, y: -10});
-    createLineBetweenPoints(borders, {x: -10, y: 75}, {x: 25, y: 0});
-    
+    createLineBetweenPoints(borders, { x: -6, y: 50 }, { x: 50, y: -6 });
+    createLineBetweenPoints(borders, { x: 0, y: 25 }, { x: 75, y: -10 });
+    createLineBetweenPoints(borders, { x: -10, y: 75 }, { x: 25, y: 0 });
+
     // Top-right corner
-    createLineBetweenPoints(borders, {x: width + 6, y: 50}, {x: width - 50, y: -6});
-    createLineBetweenPoints(borders, {x: width, y: 25}, {x: width - 75, y: -10});
-    createLineBetweenPoints(borders, {x: width + 10, y: 75}, {x: width - 25, y: 0});
-    
+    createLineBetweenPoints(borders, { x: width + 6, y: 50 }, { x: width - 50, y: -6 });
+    createLineBetweenPoints(borders, { x: width, y: 25 }, { x: width - 75, y: -10 });
+    createLineBetweenPoints(borders, { x: width + 10, y: 75 }, { x: width - 25, y: 0 });
+
     // Bottom-left corner
-    createLineBetweenPoints(borders, {x: -6, y: height - 50}, {x: 50, y: height + 6});
-    createLineBetweenPoints(borders, {x: 0, y: height - 25}, {x: 75, y: height + 10});
-    createLineBetweenPoints(borders, {x: -10, y: height - 75}, {x: 25, y: height});
-    
+    createLineBetweenPoints(borders, { x: -6, y: height - 50 }, { x: 50, y: height + 6 });
+    createLineBetweenPoints(borders, { x: 0, y: height - 25 }, { x: 75, y: height + 10 });
+    createLineBetweenPoints(borders, { x: -10, y: height - 75 }, { x: 25, y: height });
+
     // Bottom-right corner
-    createLineBetweenPoints(borders, {x: width + 6, y: height - 50}, {x: width - 50, y: height + 6});
-    createLineBetweenPoints(borders, {x: width, y: height - 25}, {x: width - 75, y: height + 10});
-    createLineBetweenPoints(borders, {x: width + 10, y: height - 75}, {x: width - 25, y: height});
+    createLineBetweenPoints(borders, { x: width + 6, y: height - 50 }, { x: width - 50, y: height + 6 });
+    createLineBetweenPoints(borders, { x: width, y: height - 25 }, { x: width - 75, y: height + 10 });
+    createLineBetweenPoints(borders, { x: width + 10, y: height - 75 }, { x: width - 25, y: height });
 }
 
-
+// Clears all marbles from the canvas
 function clearMarbles() {
     marbles.forEach(marble => marble.remove());
     marbles = [];
 }
 
+// Clears all strings from the canvas
 function clearStrings() {
     strings.forEach(string => string.remove());
     strings = [];
 }
 
+// Clears all borders from the canvas
 function clearBorders() {
     borders.forEach(border => border.remove());
     borders = [];
 }
 
+// Main draw loop
 function draw() {
     clear();
     background(255);
-    // frameRate(15);
     Engine.update(engine);
 
     strings.forEach(string => string.draw());
-    borders.forEach(borders => borders.draw());
-    marbles.forEach(marble => {
-        marble.draw();
-        marble.update();
-    });
+    borders.forEach(border => border.draw());
+    marbles.forEach(marble => marble.draw());
 }
 
-// Add corner smoothing to new coordinates when canvas is resized
+// Handles canvas resizing and regenerates borders
 window.addEventListener('resize', () => {
     clearBorders();
     if (screen.width > 1024) {
+        const screenGridHeight = screen.height % 100;
+        console.log(screenGridHeight);
         createCanvas(800, 800);
     } else if (screen.width > 640) {
         createCanvas(600, 600);
