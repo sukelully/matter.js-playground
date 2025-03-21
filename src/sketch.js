@@ -16,18 +16,10 @@ let source;
 // Mode toggles for placing marbles or creating strings
 const mode = { marbles: true, strings: false };
 
-// Setup function initializes the canvas, physics engine, and UI
+// Call drawCanvas in setup and on resize
 function setup() {
     setupUI();
-
-    // Adjust canvas size based on screen width
-    if (screen.width > 1024) {
-        createCanvas(800, 800);
-    } else if (screen.width > 640) {
-        createCanvas(600, 600);
-    } else {
-        createCanvas(screen.width - 50, screen.height - 200);
-    }
+    drawCanvas();
 
     // Initialize Matter.js engine and world
     engine = Engine.create();
@@ -41,6 +33,12 @@ function setup() {
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', handleCollision);
 }
+
+window.addEventListener('resize', () => {
+    clearBorders();
+    drawCanvas();
+    generateBorders();
+});
 
 // Handles collisions between marbles and strings
 function handleCollision(event) {
@@ -237,17 +235,16 @@ function draw() {
     marbles.forEach(marble => marble.draw());
 }
 
-// Handles canvas resizing and regenerates borders
-window.addEventListener('resize', () => {
-    clearBorders();
-    if (screen.width > 1024) {
-        const screenGridHeight = screen.height % 100;
-        console.log(screenGridHeight);
-        createCanvas(800, 800);
-    } else if (screen.width > 640) {
-        createCanvas(600, 600);
+function drawCanvas() {
+    if (screen.width > 640) {
+        // For screens wider than 640px, make the canvas square
+        const screenCutoff = screen.height % 100;
+        const screenHeight = screen.height - screenCutoff;
+        createCanvas(screenHeight, screenHeight);
     } else {
-        createCanvas(screen.width - 100, screen.height - 200);
+        // For smaller screens, leave room for controls at the bottom
+        const width = screen.width - 20; // Add some padding
+        const height = screen.height * 0.7; // Use 70% of the screen height
+        createCanvas(width, height);
     }
-    generateBorders();
-});
+}
