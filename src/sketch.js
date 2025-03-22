@@ -58,7 +58,7 @@ function handleCollision(event) {
             // Find the corresponding String instance and play sound
             const stringInstance = strings.find(string => string.body === stringBody);
             if (stringInstance) {
-                stringInstance.play(440); // Play sound at 440 Hz
+                stringInstance.play(stringInstance.w); // Play sound at 440 Hz
             }
         }
     });
@@ -110,27 +110,31 @@ function applyButtonHighlight(button, isActive) {
 // Handles mouse press events for placing marbles or creating strings
 function mousePressed() {
     // Limit mouse presses to canvas area
+    let gridX, gridY;
     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
 
     if (mode.marbles) {
         // Grid mode trial
-        const gridX = Math.ceil(mouseX / 10) * 10;
-        const gridY = Math.ceil(mouseY / 10) * 10;
         marbles.push(new Marble(mouseX, mouseY, 30));
     } else {
+        if (mode.grid) {
+            gridX = Math.round(mouseX / 10) * 10;
+            gridY = Math.round(mouseY / 10) * 10;
+            console.log(gridX, gridY);
+        } else {
+            gridX = mouseX;
+            gridY = mouseY;
+        }
         if (mouseCount === 0) {
-            stringPos1 = { x: mouseX, y: mouseY };
+            stringPos1 = { x: gridX, y: gridY };
             mouseCount++;
         } else {
-            stringPos2 = { x: mouseX, y: mouseY };
+            stringPos2 = { x: gridX, y: gridY };
             createLineBetweenPoints(strings, stringPos1, stringPos2);
-            createString(stringPos1, stringPos2);
             mouseCount = 0;
         }
     }
 }
-
-
 
 function toggleGrid() {
     if (mode.grid) {
@@ -139,17 +143,6 @@ function toggleGrid() {
         mode.grid = true;
     }
     applyButtonHighlight(document.getElementById('grid-btn'), mode.grid);
-}
-
-// Creates a static point and visual representation for a string
-function createString(pos1, pos2) {
-    const ballOptions = { isStatic: true };
-    const point1 = Bodies.circle(pos1.x, pos1.y, 20, ballOptions);
-    Composite.add(world, point1);
-
-    rectMode(CENTER);
-    fill(0);
-    ellipse(pos1.x, pos1.y, 20);
 }
 
 // Checks if coordinates are within the canvas, accounting for rounded corners
@@ -251,7 +244,6 @@ function draw() {
 }
 
 // Draw canvas to nearest 10 or 100 to ensure grid works correctly
-// 
 function drawCanvas() {
     const screenWidthCutoff = screen.width % 100;
     const screenHeightCutoff = screen.height % 100;
@@ -262,14 +254,12 @@ function drawCanvas() {
 
     if (screen.width > screen.height) {
         if (screen.width > 640) {
-            // For screens wider than 640px, make the canvas square
             createCanvas(screenHeight, screenHeight);
         } else {
             createCanvas(screenWidth, heightAdjust);
         }
     } else {
         if (screen.width > 640) {
-            // For screens wider than 640px, make the canvas square
             createCanvas(screenWidth, screenWidth);
             console.log('test');
         } else {
@@ -293,7 +283,6 @@ function drawCanvas() {
         body.style.flexDirection = 'row';
         body.style.gap = '3em';
         controlsContainer.style.flexDirection = 'column';
-
     }
     
 }

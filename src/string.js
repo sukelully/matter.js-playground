@@ -30,12 +30,13 @@ class String {
     
         // Draw circles at the ends of the string
         fill(0);
-        ellipse(-this.w / 2, 0, 30); // Circle at the left end
-        ellipse(this.w / 2, 0, 30);  // Circle at the right end
+        ellipse(-this.w / 2, 0, 30);
+        ellipse(this.w / 2, 0, 30);
     
         pop();
     }
 
+    // Play string pluck at given frequency
     play(freq) {
         // Initialize audioContext if it doesn't exist
         if (!audioContext) {
