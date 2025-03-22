@@ -17,7 +17,7 @@ class Marble {
     }
 
     static getRandomColour() {
-        const colours = ['#d2f1e4', '#fbcaef', '#acf39d', '#f2dc5d', '#f2a359'];
+        const colours = ['#d2f1e4', '#fbcaef', '#acf39d', '#f2dc5d', '#ffb997', '#157a63', '#499f68', '#77b28c', '#87255b', '#7dd181', '#8075ff', '#437f97', '#ffb30f'];
         return colours[Math.floor(Math.random() * colours.length)];
     }
 

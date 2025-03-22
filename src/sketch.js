@@ -1,19 +1,10 @@
 // Import Matter.js modules
 const { Engine, World, Bodies, Composite } = Matter;
 
-const GRID_SIZE = 50;
-
 // DOM and global variables
 const body = document.querySelector('body');
 let engine, world;
 let strings = [], marbles = [], borders = [], grid = [];
-let buttonHighlight = '#252525';
-let buttonHighlightText = 'white';
-let mouseCount = 0;
-let stringPos1, stringPos2;
-
-let audioContext;
-let source;
 
 // Mode toggles for placing marbles or creating strings
 const mode = { marbles: true, strings: false, grid: false };
@@ -34,6 +25,7 @@ function setup() {
 
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', handleCollision);
+    clearCanvas();   // Resize canvas 
 }
 
 // Handles collisions between marbles and strings
@@ -98,14 +90,16 @@ function draw() {
     Engine.update(engine);
 
     if (mode.grid) grid.forEach(gridLine => gridLine.draw());
-    borders.forEach(border => border.draw());
+    // borders.forEach(border => border.draw());
     strings.forEach(string => string.draw());
     marbles.forEach(marble => marble.draw());
 }
 
-window.addEventListener('resize', () => {
+function clearCanvas() {
     clearBorders();
     drawCanvas();
     drawGrid();
     generateBorders();
-});
+}
+
+window.addEventListener('resize', clearCanvas);

@@ -7,3 +7,4 @@
 - [ ] Better create string mode (eg click and drag)
 - [x] Basic karplus-strong implementation
 - [ ] Improve border rounding on mobile mode
+- [ ] Implement velocity and dampening on string strikes
