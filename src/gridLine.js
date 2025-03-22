@@ -14,6 +14,7 @@ class GridLine {
         strokeWeight(1);
         noStroke();
         fill(150);
-        rect(0, 0, this.w, this.h);
+        rect(this.x, this.y, this.w, this.h); 
+        pop();
     }
 }

@@ -1,10 +1,12 @@
 // Import Matter.js modules
 const { Engine, World, Bodies, Composite } = Matter;
 
+const GRID_SIZE = 50;
+
 // DOM and global variables
 const body = document.querySelector('body');
 let engine, world;
-let strings = [], marbles = [], borders = [];
+let strings = [], marbles = [], borders = [], grid = [];
 let buttonHighlight = '#252525';
 let buttonHighlightText = 'white';
 let mouseCount = 0;
@@ -27,7 +29,7 @@ function setup() {
 
     // Generate borders and add initial objects
     generateBorders();
-    strings.push(new String(150, 100, width * 0.6, 20, 0.4));
+    strings.push(new String(150, 100, width * 0.6, 5, 0.4));
     marbles.push(new Marble(50, 50, 30));
 
     // Add collision event listener
@@ -117,9 +119,10 @@ function mousePressed() {
         // Grid mode trial
         marbles.push(new Marble(mouseX, mouseY, 30));
     } else {
+        // Round to nearest 10
         if (mode.grid) {
-            gridX = Math.round(mouseX / 10) * 10;
-            gridY = Math.round(mouseY / 10) * 10;
+            gridX = Math.round(mouseX / GRID_SIZE) * GRID_SIZE;
+            gridY = Math.round(mouseY / GRID_SIZE) * GRID_SIZE;
             console.log(gridX, gridY);
         } else {
             gridX = mouseX;
@@ -136,6 +139,22 @@ function mousePressed() {
     }
 }
 
+function drawGrid() {
+    console.log('test');
+    // grid.push(new GridLine(width/2, 10, width, 1));
+    for (let i = 0; i < height; i++) {
+        if (i % GRID_SIZE === 0) {
+            grid.push(new GridLine(width/2, i, width, 1));
+        }
+    }
+    
+    for (let j = 0; j < height; j++) {
+        if (j % GRID_SIZE === 0) {
+            grid.push(new GridLine(j, height/2, 1, height));
+        }
+    }
+}
+
 function toggleGrid() {
     if (mode.grid) {
         mode.grid = false;
@@ -143,6 +162,7 @@ function toggleGrid() {
         mode.grid = true;
     }
     applyButtonHighlight(document.getElementById('grid-btn'), mode.grid);
+    drawGrid();
 }
 
 // Checks if coordinates are within the canvas, accounting for rounded corners
@@ -174,9 +194,9 @@ function createLineBetweenPoints(arr, pos1, pos2) {
     const rotation = Math.asin(opp / hyp);
 
     if (arr === strings) {
-        arr.push(new String(midX, midY, hyp, 20, rotation));
+        arr.push(new String(midX, midY, hyp, 5, rotation));
     } else {
-        arr.push(new Boundary(midX, midY, hyp, 20, rotation));
+        arr.push(new Boundary(midX, midY, hyp, 5, rotation));
     }
 }
 
@@ -238,6 +258,7 @@ function draw() {
     background(255);
     Engine.update(engine);
 
+    if (mode.grid) grid.forEach(gridLine => gridLine.draw());
     strings.forEach(string => string.draw());
     borders.forEach(border => border.draw());
     marbles.forEach(marble => marble.draw());
