@@ -1,3 +1,31 @@
+// Sets up the UI with buttons for different actions
+function setupUI() {
+    const controlsContainer = document.createElement('div');
+    controlsContainer.id = 'controls-container';
+
+    const buttons = [
+        { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
+        { id: 'create-string-btn', text: 'Create String', handler: () => setMode(false) },
+        { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
+        { id: 'clear-strings-btn', text: 'Clear Strings', handler: clearStrings },
+        { id: 'grid-btn', text: 'Grid', handler: toggleGrid }
+    ];
+
+    buttons.forEach(({ id, text, handler }) => {
+        const btn = document.createElement('button');
+        btn.id = id;
+        btn.textContent = text;
+
+        // Highlight the "Place Marble" button by default
+        if (id === 'place-marble-btn') applyButtonHighlight(btn, true);
+
+        btn.addEventListener('click', handler);
+        controlsContainer.appendChild(btn);
+    });
+
+    body.appendChild(controlsContainer);
+}
+
 // Clears all borders from the canvas
 function clearBorders() {
     borders.forEach(border => border.remove());
@@ -49,25 +77,49 @@ function generateBorders() {
 
 // Creates corner borders with angled lines
 function createCornerBorders() {
-    // Top-left corner
-    createLineBetweenPoints(borders, { x: -6, y: 50 }, { x: 50, y: -6 }, 20);
-    createLineBetweenPoints(borders, { x: 0, y: 25 }, { x: 75, y: -10 }, 20);
-    createLineBetweenPoints(borders, { x: -10, y: 75 }, { x: 25, y: 0 }, 20);
+    if (screen.width > 640) {
+        // Top-left corner
+        createLineBetweenPoints(borders, { x: -6, y: 50 }, { x: 50, y: -6 }, 20);
+        createLineBetweenPoints(borders, { x: 0, y: 25 }, { x: 75, y: -10 }, 20);
+        createLineBetweenPoints(borders, { x: -10, y: 75 }, { x: 25, y: 0 }, 20);
 
-    // Top-right corner
-    createLineBetweenPoints(borders, { x: width + 6, y: 50 }, { x: width - 50, y: -6 }, 20);
-    createLineBetweenPoints(borders, { x: width, y: 25 }, { x: width - 75, y: -10 }, 20);
-    createLineBetweenPoints(borders, { x: width + 10, y: 75 }, { x: width - 25, y: 0 }, 20);
+        // Top-right corner
+        createLineBetweenPoints(borders, { x: width + 6, y: 50 }, { x: width - 50, y: -6 }, 20);
+        createLineBetweenPoints(borders, { x: width, y: 25 }, { x: width - 75, y: -10 }, 20);
+        createLineBetweenPoints(borders, { x: width + 10, y: 75 }, { x: width - 25, y: 0 }, 20);
 
-    // Bottom-left corner
-    createLineBetweenPoints(borders, { x: -6, y: height - 50 }, { x: 50, y: height + 6 }, 20);
-    createLineBetweenPoints(borders, { x: 0, y: height - 25 }, { x: 75, y: height + 10 }, 20);
-    createLineBetweenPoints(borders, { x: -10, y: height - 75 }, { x: 25, y: height }, 20);
+        // Bottom-left corner
+        createLineBetweenPoints(borders, { x: -6, y: height - 50 }, { x: 50, y: height + 6 }, 20);
+        createLineBetweenPoints(borders, { x: 0, y: height - 25 }, { x: 75, y: height + 10 }, 20);
+        createLineBetweenPoints(borders, { x: -10, y: height - 75 }, { x: 25, y: height }, 20);
 
-    // Bottom-right corner
-    createLineBetweenPoints(borders, { x: width + 6, y: height - 50 }, { x: width - 50, y: height + 6 }, 20);
-    createLineBetweenPoints(borders, { x: width, y: height - 25 }, { x: width - 75, y: height + 10 }, 20);
-    createLineBetweenPoints(borders, { x: width + 10, y: height - 75 }, { x: width - 25, y: height }, 20);
+        // Bottom-right corner
+        createLineBetweenPoints(borders, { x: width + 6, y: height - 50 }, { x: width - 50, y: height + 6 }, 20);
+        createLineBetweenPoints(borders, { x: width, y: height - 25 }, { x: width - 75, y: height + 10 }, 20);
+        createLineBetweenPoints(borders, { x: width + 10, y: height - 75 }, { x: width - 25, y: height }, 20);
+    } else {
+        // Top-left corner
+        createLineBetweenPoints(borders, { x: -12, y: 50 }, { x: 50, y: -12 }, 20);
+        createLineBetweenPoints(borders, { x: 0, y: 20 }, { x: 75, y: -13 }, 20);
+        createLineBetweenPoints(borders, { x: -13, y: 75 }, { x: 20, y: 0 }, 20);
+
+        // Top-right corner
+        createLineBetweenPoints(borders, { x: width + 12, y: 50 }, { x: width - 50, y: -12 }, 20);
+        createLineBetweenPoints(borders, { x: width, y: 20 }, { x: width - 75, y: -13 }, 20);
+        createLineBetweenPoints(borders, { x: width + 13, y: 75 }, { x: width - 20, y: 0 }, 20);
+
+        // Bottom-left corner
+        createLineBetweenPoints(borders, { x: -12, y: height - 50 }, { x: 50, y: height + 12 }, 20);
+        createLineBetweenPoints(borders, { x: 0, y: height - 20 }, { x: 75, y: height + 13 }, 20);
+        createLineBetweenPoints(borders, { x: -13, y: height - 75 }, { x: 20, y: height }, 20);
+
+        // Bottom-right corner
+        createLineBetweenPoints(borders, { x: width + 12, y: height - 50 }, { x: width - 50, y: height + 12 }, 20);
+        createLineBetweenPoints(borders, { x: width, y: height - 20 }, { x: width - 75, y: height + 13 }, 20);
+        createLineBetweenPoints(borders, { x: width + 13, y: height - 75 }, { x: width - 20, y: height }, 20);
+
+
+    }
 }
 
 // Checks if coordinates are within the canvas, accounting for rounded corners
@@ -85,22 +137,6 @@ function isWithinCanvas(x, y, radius) {
     return corners.some(({ cx, cy }) => (x - cx) ** 2 + (y - cy) ** 2 < radius ** 2);
 }
 
-function drawGrid() {
-    console.log('test');
-    // grid.push(new GridLine(width/2, 10, width, 1));
-    for (let i = 0; i < height; i++) {
-        if (i % GRID_SIZE === 0) {
-            grid.push(new GridLine(width/2, i, width, 1));
-        }
-    }
-    
-    for (let j = 0; j < height; j++) {
-        if (j % GRID_SIZE === 0) {
-            grid.push(new GridLine(j, height/2, 1, height));
-        }
-    }
-}
-
 function toggleGrid() {
     if (mode.grid) {
         mode.grid = false;
@@ -111,32 +147,20 @@ function toggleGrid() {
     drawGrid();
 }
 
-// Sets up the UI with buttons for different actions
-function setupUI() {
-    const controlsContainer = document.createElement('div');
-    controlsContainer.id = 'controls-container';
+function drawGrid() {
+    console.log('test');
+    // grid.push(new GridLine(width/2, 10, width, 1));
+    for (let i = 0; i < height; i++) {
+        if (i % GRID_SIZE === 0) {
+            grid.push(new GridLine(width / 2, i, width, 1));
+        }
+    }
 
-    const buttons = [
-        { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
-        { id: 'create-string-btn', text: 'Create String', handler: () => setMode(false) },
-        { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
-        { id: 'clear-strings-btn', text: 'Clear Strings', handler: clearStrings },
-        { id: 'grid-btn', text: 'Grid', handler: toggleGrid }
-    ];
-
-    buttons.forEach(({ id, text, handler }) => {
-        const btn = document.createElement('button');
-        btn.id = id;
-        btn.textContent = text;
-
-        // Highlight the "Place Marble" button by default
-        if (id === 'place-marble-btn') applyButtonHighlight(btn, true);
-
-        btn.addEventListener('click', handler);
-        controlsContainer.appendChild(btn);
-    });
-
-    body.appendChild(controlsContainer);
+    for (let j = 0; j < height; j++) {
+        if (j % GRID_SIZE === 0) {
+            grid.push(new GridLine(j, height / 2, 1, height));
+        }
+    }
 }
 
 // Toggles between marble and string placement modes
@@ -172,11 +196,12 @@ function drawCanvas() {
         createCanvas(screenWidth, isLargeScreen ? screenWidth : adjustedHeight);
     }
 
-    const canvasControlsWidth = (body.offsetWidth > body.offsetHeight) 
-        ? width + 200 
+    const canvasControlsWidth = (body.offsetWidth > body.offsetHeight)
+        ? width + 200
         : width + controlsContainer.offsetWidth;
 
     if (canvasControlsWidth > screen.width) {
+        console.log('test');
         applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight);
     } else {
         applyRowLayout(controlsContainer);
@@ -192,6 +217,8 @@ function applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight) {
 
     if (isLargeScreen) {
         createCanvas(adjustedHeight, adjustedHeight);
+    } else {
+        createCanvas(width, adjustedHeight - 100);
     }
 }
 

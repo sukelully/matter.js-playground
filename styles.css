@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    border: 2px solid black;
+    /* border: 2px solid black; */
 }
 
 :root {
@@ -24,6 +24,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    padding-bottom: 1em;
 }
 
 button {
@@ -39,10 +40,19 @@ canvas {
     border-radius: 100px;
 }
 
+.no-drag {
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 /* MOBILE */
 @media only screen and (max-width: 640px) {
     body {
         display: flex;
+        position: static;
         flex-direction: column;
         gap: 0;
         width: 100vw;
