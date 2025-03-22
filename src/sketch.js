@@ -45,13 +45,11 @@ function handleCollision(event) {
             
             const marbleBody = bodyB;
             const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
-            console.log(velocity);
 
             // Find the corresponding String instance and play sound
             const stringInstance = strings.find(string => string.body === stringBody);
             if (stringInstance) {
-                // stringInstance.play(stringInstance.w); // Play sound at 440 Hz
-                stringInstance.play();
+                stringInstance.play(smoothVelocity(velocity));
             }
         }
     });

@@ -35,6 +35,10 @@ function setupUI() {
     body.appendChild(controlsContainer);
 }
 
+function smoothVelocity(velocity) {
+    return 0.9995 - 0.1 * Math.exp(-0.35 * velocity);
+}
+
 // Clears all borders from the canvas
 function clearBorders() {
     borders.forEach(border => border.remove());
