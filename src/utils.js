@@ -5,6 +5,7 @@ let stringPos1, stringPos2;
 let mouseCount = 0;
 let audioContext;
 let source;
+let octave = 1;
 
 // Sets up the UI with buttons for different actions
 function setupUI() {

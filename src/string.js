@@ -4,6 +4,7 @@ class String {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.freq = String.getFreq();
         let options = {
             friction: 0,
             restitution: 1,
@@ -14,6 +15,12 @@ class String {
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
 
         Composite.add(world, this.body);
+    }
+
+    static getFreq() {
+        const cMajPent = [261.63, 329.63, 392, 493.88, 523.25, 587.33, 659.25];
+
+        return cMajPent[Math.floor(Math.random() * cMajPent.length)];
     }
 
     draw() {
@@ -37,12 +44,12 @@ class String {
     }
 
     // Play string pluck at given frequency
-    play(freq) {
+    play(freq = this.freq) {
         // Initialize audioContext if it doesn't exist
         if (!audioContext) {
             audioContext = new AudioContext();
         }
-
+        freq *= 0.5;
         const delaySamples = Math.round(audioContext.sampleRate / freq);
         const delayBuffer = new Float32Array(delaySamples);
         let dbIndex = 0;

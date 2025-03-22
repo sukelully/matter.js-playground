@@ -46,7 +46,8 @@ function handleCollision(event) {
             // Find the corresponding String instance and play sound
             const stringInstance = strings.find(string => string.body === stringBody);
             if (stringInstance) {
-                stringInstance.play(stringInstance.w); // Play sound at 440 Hz
+                // stringInstance.play(stringInstance.w); // Play sound at 440 Hz
+                stringInstance.play();
             }
         }
     });
