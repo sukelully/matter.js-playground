@@ -14,7 +14,7 @@ let audioContext;
 let source;
 
 // Mode toggles for placing marbles or creating strings
-const mode = { marbles: true, strings: false };
+const mode = { marbles: true, strings: false, grid: false };
 
 // Call drawCanvas in setup and on resize
 function setup() {
@@ -73,7 +73,8 @@ function setupUI() {
         { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
         { id: 'create-string-btn', text: 'Create String', handler: () => setMode(false) },
         { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
-        { id: 'clear-strings-btn', text: 'Clear Strings', handler: clearStrings }
+        { id: 'clear-strings-btn', text: 'Clear Strings', handler: clearStrings },
+        { id: 'grid-btn', text: 'Grid', handler: toggleGrid }
     ];
 
     buttons.forEach(({ id, text, handler }) => {
@@ -112,6 +113,9 @@ function mousePressed() {
     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
 
     if (mode.marbles) {
+        // Grid mode trial
+        const gridX = Math.ceil(mouseX / 10) * 10;
+        const gridY = Math.ceil(mouseY / 10) * 10;
         marbles.push(new Marble(mouseX, mouseY, 30));
     } else {
         if (mouseCount === 0) {
@@ -124,6 +128,17 @@ function mousePressed() {
             mouseCount = 0;
         }
     }
+}
+
+
+
+function toggleGrid() {
+    if (mode.grid) {
+        mode.grid = false;
+    } else {
+        mode.grid = true;
+    }
+    applyButtonHighlight(document.getElementById('grid-btn'), mode.grid);
 }
 
 // Creates a static point and visual representation for a string
@@ -244,7 +259,6 @@ function drawCanvas() {
     const screenHeight = screen.height - screenHeightCutoff;
     const controlsContainer = document.getElementById('controls-container');
     const heightAdjust = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
-    // const widthAdjust = Math
 
     if (screen.width > screen.height) {
         if (screen.width > 640) {
@@ -281,8 +295,5 @@ function drawCanvas() {
         controlsContainer.style.flexDirection = 'column';
 
     }
-    // console.log(`canvas and control width: ${canvasControlsWidth}`);
-    // console.log(`screen width: ${screen.width}`);
-    // console.log(`body width: ${body.offsetWidth}`);
     
 }
