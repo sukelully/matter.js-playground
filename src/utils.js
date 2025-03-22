@@ -228,7 +228,7 @@ function applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight) {
     if (isLargeScreen) {
         createCanvas(adjustedHeight, adjustedHeight);
     } else {
-        createCanvas(width, adjustedHeight - 50);
+        createCanvas(width, adjustedHeight - 100);
     }
 }
 

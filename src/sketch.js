@@ -5,6 +5,8 @@ const { Engine, World, Bodies, Composite } = Matter;
 const body = document.querySelector('body');
 let engine, world;
 let strings = [], marbles = [], borders = [], grid = [];
+let isDragging = false;
+let dragStart = null;
 
 // Mode toggles for placing marbles or creating strings
 const mode = { marbles: true, strings: false, grid: false };
@@ -55,35 +57,87 @@ function handleCollision(event) {
     });
 }
 
-// Handles mouse press events for placing marbles or creating strings
 function mousePressed() {
     // Limit mouse presses to canvas area
-    let gridX, gridY;
     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
 
-    // Place marbles
-    if (mode.marbles) {
-        marbles.push(new Marble(mouseX, mouseY, 30));
-    // Or create strings
+    if (!mode.marbles) {
+        // Start dragging for string creation
+        isDragging = true;
+        dragStart = mode.grid
+            ? {
+                  x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
+                  y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE,
+              }
+            : { x: mouseX, y: mouseY };
     } else {
-        // Round to nearest grid cell size
-        if (mode.grid) {
-            gridX = Math.round(mouseX / GRID_SIZE) * GRID_SIZE;
-            gridY = Math.round(mouseY / GRID_SIZE) * GRID_SIZE;
-        } else {
-            gridX = mouseX;
-            gridY = mouseY;
-        }
-        if (mouseCount === 0) {
-            stringPos1 = { x: gridX, y: gridY };
-            mouseCount++;
-        } else {
-            stringPos2 = { x: gridX, y: gridY };
-            createLineBetweenPoints(strings, stringPos1, stringPos2);
-            mouseCount = 0;
-        }
+        marbles.push(new Marble(mouseX, mouseY, 30));
     }
 }
+
+function mouseDragged() {
+    if (isDragging && mode.strings) {
+        const dragEnd = mode.grid 
+            ? {
+                x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
+                y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE
+            }
+            : { x: mouseX, y: mouseY };
+
+        // // Draw a temporary line (optional, for visual feedback)
+        // clear(); // Clear the canvas
+        // background(255); // Redraw background
+        // draw(); // Redraw existing objects
+        // stroke(0); // Set line color
+        // line(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y); // Draw the line
+    }
+}
+
+function mouseReleased() {
+    if (isDragging && mode.strings) {
+        const dragEnd = mode.grid
+            ? {
+                x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
+                y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE
+            }
+            : { x: mouseX, y: mouseY };
+
+        createLineBetweenPoints(strings,dragStart, dragEnd);
+
+        isDragging = false;
+        dragStart = null
+    }
+}
+
+// // Handles mouse press events for placing marbles or creating strings
+// function mousePressed() {
+//     // Limit mouse presses to canvas area
+//     let gridX, gridY;
+//     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
+
+//     // Place marbles
+//     if (mode.marbles) {
+//         marbles.push(new Marble(mouseX, mouseY, 30));
+//     // Or create strings
+//     } else {
+//         // Round to nearest grid cell size
+//         if (mode.grid) {
+//             gridX = Math.round(mouseX / GRID_SIZE) * GRID_SIZE;
+//             gridY = Math.round(mouseY / GRID_SIZE) * GRID_SIZE;
+//         } else {
+//             gridX = mouseX;
+//             gridY = mouseY;
+//         }
+//         if (mouseCount === 0) {
+//             stringPos1 = { x: gridX, y: gridY };
+//             mouseCount++;
+//         } else {
+//             stringPos2 = { x: gridX, y: gridY };
+//             createLineBetweenPoints(strings, stringPos1, stringPos2);
+//             mouseCount = 0;
+//         }
+//     }
+// }
 
 // Main draw loop
 function draw() {
