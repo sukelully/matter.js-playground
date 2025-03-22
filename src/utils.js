@@ -154,45 +154,49 @@ function applyButtonHighlight(button, isActive) {
     button.style.color = isActive ? buttonHighlightText : 'black';
 }
 
-// Draw canvas to nearest 10 or 100 to ensure grid works correctly
 function drawCanvas() {
     const screenWidthCutoff = screen.width % 100;
     const screenHeightCutoff = screen.height % 100;
     const screenWidth = screen.width - screenWidthCutoff;
     const screenHeight = screen.height - screenHeightCutoff;
-    const controlsContainer = document.getElementById('controls-container');
-    const heightAdjust = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
 
-    if (screen.width > screen.height) {
-        if (screen.width > 640) {
-            createCanvas(screenHeight, screenHeight);
-        } else {
-            createCanvas(screenWidth, heightAdjust);
-        }
+    const controlsContainer = document.getElementById('controls-container');
+    const adjustedHeight = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
+
+    const isLandscape = screen.width > screen.height;
+    const isLargeScreen = screen.width > 640;
+
+    if (isLandscape) {
+        createCanvas(isLargeScreen ? screenHeight : screenWidth, isLargeScreen ? screenHeight : adjustedHeight);
     } else {
-        if (screen.width > 640) {
-            createCanvas(screenWidth, screenWidth);
-            console.log('test');
-        } else {
-            createCanvas(screenWidth, heightAdjust);
-        }
+        createCanvas(screenWidth, isLargeScreen ? screenWidth : adjustedHeight);
     }
-    
-    // Get width of canvas and controls container
-    const canvasControlsWidth = (body.offsetWidth > body.offsetHeight) ? 
-    width + 200:
-    width + controlsContainer.offsetWidth;
+
+    const canvasControlsWidth = (body.offsetWidth > body.offsetHeight) 
+        ? width + 200 
+        : width + controlsContainer.offsetWidth;
 
     if (canvasControlsWidth > screen.width) {
-        body.style.flexDirection = 'column';
-        body.style.gap = '1em';
-        controlsContainer.style.flexDirection = 'row';
-        controlsContainer.style.flexWrap = 'wrap';
-        controlsContainer.style.justifyContent = 'center';
-        if (screen.width > 640) createCanvas(heightAdjust, heightAdjust);
+        applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight);
     } else {
-        body.style.flexDirection = 'row';
-        body.style.gap = '3em';
-        controlsContainer.style.flexDirection = 'column';
+        applyRowLayout(controlsContainer);
     }
+}
+
+function applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight) {
+    body.style.flexDirection = 'column';
+    body.style.gap = '1em';
+    controlsContainer.style.flexDirection = 'row';
+    controlsContainer.style.flexWrap = 'wrap';
+    controlsContainer.style.justifyContent = 'center';
+
+    if (isLargeScreen) {
+        createCanvas(adjustedHeight, adjustedHeight);
+    }
+}
+
+function applyRowLayout(controlsContainer) {
+    body.style.flexDirection = 'row';
+    body.style.gap = '3em';
+    controlsContainer.style.flexDirection = 'column';
 }

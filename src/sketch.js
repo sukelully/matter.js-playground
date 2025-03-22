@@ -105,5 +105,6 @@ function draw() {
 window.addEventListener('resize', () => {
     clearBorders();
     drawCanvas();
+    drawGrid();
     generateBorders();
 });
