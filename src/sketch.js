@@ -42,6 +42,10 @@ function handleCollision(event) {
 
         if (isMarbleAndString) {
             const stringBody = bodyA.label === 'string' ? bodyA : bodyB;
+            
+            const marbleBody = bodyB;
+            const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
+            console.log(velocity);
 
             // Find the corresponding String instance and play sound
             const stringInstance = strings.find(string => string.body === stringBody);
@@ -68,7 +72,6 @@ function mousePressed() {
         if (mode.grid) {
             gridX = Math.round(mouseX / GRID_SIZE) * GRID_SIZE;
             gridY = Math.round(mouseY / GRID_SIZE) * GRID_SIZE;
-            console.log(gridX, gridY);
         } else {
             gridX = mouseX;
             gridY = mouseY;

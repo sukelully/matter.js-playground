@@ -64,7 +64,7 @@ class String {
             const sample = (i < noiseBurst) ? Math.random() * 2 * 0.2 - 0.2 : 0;
 
             // Apply lowpass by averaging adjacent delay line samples
-            delayBuffer[dbIndex] = sample + 0.99 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
+            delayBuffer[dbIndex] = sample + 0.9 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
             output[i] = delayBuffer[dbIndex];
 
             // Loop delay buffer
