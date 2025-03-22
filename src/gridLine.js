@@ -5,6 +5,7 @@ class GridLine {
         this.w = w;
         this.h = h;
         this.a = a;
+        this.color = 'rgba(206, 206, 206, 0.5)';
     }
 
     draw() {
@@ -13,7 +14,7 @@ class GridLine {
         rectMode(CENTER);
         strokeWeight(1);
         noStroke();
-        fill(150);
+        fill(this.color);
         rect(this.x, this.y, this.w, this.h); 
         pop();
     }

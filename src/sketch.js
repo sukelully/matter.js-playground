@@ -66,11 +66,12 @@ function mousePressed() {
     let gridX, gridY;
     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
 
+    // Place marbles
     if (mode.marbles) {
-        // Grid mode trial
         marbles.push(new Marble(mouseX, mouseY, 30));
+    // Or create strings
     } else {
-        // Round to nearest 10
+        // Round to nearest grid cell size
         if (mode.grid) {
             gridX = Math.round(mouseX / GRID_SIZE) * GRID_SIZE;
             gridY = Math.round(mouseY / GRID_SIZE) * GRID_SIZE;
