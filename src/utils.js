@@ -156,7 +156,6 @@ function toggleGrid() {
 }
 
 function drawGrid() {
-    console.log('test');
     for (let i = 0; i < height; i++) {
         if (i % GRID_SIZE === 0) {
             grid.push(new GridLine(width / 2, i, width, 1));
@@ -190,7 +189,6 @@ function drawCanvas() {
     const screenHeightCutoff = screen.height % 100;
     const screenWidth = screen.width - screenWidthCutoff;
     const screenHeight = screen.height - screenHeightCutoff;
-    console.log(screenHeight);
 
     const controlsContainer = document.getElementById('controls-container');
     const adjustedHeight = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
@@ -209,7 +207,6 @@ function drawCanvas() {
         : width + controlsContainer.offsetWidth;
 
     if (canvasControlsWidth > screen.width) {
-        console.log('test');
         applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight);
     } else {
         applyRowLayout(controlsContainer);
@@ -226,7 +223,7 @@ function applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight) {
     if (isLargeScreen) {
         createCanvas(adjustedHeight, adjustedHeight);
     } else {
-        createCanvas(width, adjustedHeight - 10);
+        createCanvas(width, adjustedHeight - 50);
     }
 }
 
