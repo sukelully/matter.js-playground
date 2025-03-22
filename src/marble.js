@@ -35,10 +35,6 @@ class Marble {
         pop();
     }
 
-    getVelocity() {
-        return this.body.velocity;
-    }
-
     remove() {
         Composite.remove(world, this.body);
     }
