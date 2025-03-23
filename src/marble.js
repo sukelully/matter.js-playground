@@ -9,11 +9,14 @@ class Marble {
             friction: 0,
             frictionAir: 0,
             restitution: 1,
-            label: 'marble'
-        }
-
+            label: 'marble',
+        };
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);
         Composite.add(world, this.body);
+
+        // Set a random velocity
+        const randomVelocity = Marble.getRandomVelocity();
+        Body.setVelocity(this.body, randomVelocity);
     }
 
     static getRandomColour() {
@@ -21,13 +24,17 @@ class Marble {
         return colours[Math.floor(Math.random() * colours.length)];
     }
 
+    static getRandomVelocity() {
+        const maxSpeed = 5; // Adjust this value as needed
+        const vx = (Math.random() - 0.5) * 2 * maxSpeed; // Random velocity in x direction
+        const vy = (Math.random() - 0.5) * 2 * maxSpeed; // Random velocity in y direction
+        return { x: vx, y: vy };
+    }
+
     draw() {
         let pos = this.body.position;
-        let angle = this.body.angle;
         push();
         translate(pos.x, pos.y);
-        rotate(angle);
-        rectMode(CENTER);
         strokeWeight(1);
         stroke(255);
         fill(this.colour);

@@ -77,6 +77,13 @@ function createLineBetweenPoints(arr, pos1, pos2, thickness = 5) {
     }
 }
 
+function createChimes() {
+    chimes.push(new Chime(0, 0, 200));
+    chimes.push(new Chime(width, 0, 200));
+    chimes.push(new Chime(width, height, 200));
+    chimes.push(new Chime(0, height, 200));
+}
+
 // Generates borders around the canvas
 function generateBorders() {
     const thickness = 50;
@@ -237,3 +244,55 @@ function applyRowLayout(controlsContainer) {
     body.style.gap = '3em';
     controlsContainer.style.flexDirection = 'column';
 }
+
+// function mousePressed() {
+//     // Limit mouse presses to canvas area
+//     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
+
+//     if (!mode.marbles) {
+//         // Start dragging for string creation
+//         isDragging = true;
+//         dragStart = mode.grid
+//             ? {
+//                   x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
+//                   y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE,
+//               }
+//             : { x: mouseX, y: mouseY };
+//     } else {
+//         marbles.push(new Marble(mouseX, mouseY, 30));
+//     }
+// }
+
+// function mouseDragged() {
+//     if (isDragging && mode.strings) {
+//         const dragEnd = mode.grid 
+//             ? {
+//                 x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
+//                 y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE
+//             }
+//             : { x: mouseX, y: mouseY };
+
+//         // Draw line - causes weird time issues
+//         // clear(); // Clear the canvas
+//         // background(255); // Redraw background
+//         // draw(); // Redraw existing objects
+//         // stroke(0); // Set line color
+//         // line(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y); // Draw the line
+//     }
+// }
+
+// function mouseReleased() {
+//     if (isDragging && mode.strings) {
+//         const dragEnd = mode.grid
+//             ? {
+//                 x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
+//                 y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE
+//             }
+//             : { x: mouseX, y: mouseY };
+
+//         createLineBetweenPoints(strings,dragStart, dragEnd, 10);
+
+//         isDragging = false;
+//         dragStart = null
+//     }
+// }

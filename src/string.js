@@ -44,7 +44,7 @@ class String {
     }
 
     // Play string pluck at given frequency
-    play(velocity, freq = this.freq) {
+    play(velocity = 0.99, freq = this.freq) {
         // Initialize audioContext if it doesn't exist
         if (!audioContext) {
             audioContext = new AudioContext();
