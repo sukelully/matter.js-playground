@@ -3,7 +3,7 @@ class Marble {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.colour = Marble.getRandomColour();
+        this.color = Marble.getRandomColor();
 
         let options = {
             friction: 0,
@@ -12,6 +12,10 @@ class Marble {
             label: 'marble',
         };
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);
+        this.body.collisionFilter = {
+            category: marbleCategory,
+            mask: worldCategory | bassMarbleCategory
+        }
         Composite.add(world, this.body);
 
         // Set a random velocity
@@ -19,9 +23,9 @@ class Marble {
         Body.setVelocity(this.body, randomVelocity);
     }
 
-    static getRandomColour() {
-        const colours = ['#d2f1e4', '#fbcaef', '#acf39d', '#f2dc5d', '#ffb997', '#157a63', '#499f68', '#77b28c', '#87255b', '#7dd181', '#8075ff', '#437f97', '#ffb30f'];
-        return colours[Math.floor(Math.random() * colours.length)];
+    static getRandomColor() {
+        const colors = ['#d2f1e4', '#fbcaef', '#acf39d', '#f2dc5d', '#ffb997', '#157a63', '#499f68', '#77b28c', '#87255b', '#7dd181', '#8075ff', '#437f97', '#ffb30f'];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 
     static getRandomVelocity() {
@@ -32,14 +36,12 @@ class Marble {
     }
 
     draw() {
-        // console.log(Body.getVelocity());
-
         let pos = this.body.position;
         push();
         translate(pos.x, pos.y);
         strokeWeight(1);
-        stroke(255);
-        fill(this.colour);
+        stroke(this.color);
+        fill(this.color);
         ellipse(0, 0, this.r);
         pop();
     }

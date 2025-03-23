@@ -1,11 +1,16 @@
 // Import Matter.js modules
 const { Engine, World, Bodies, Body, Composite } = Matter;
 
+const marbleCategory = 0x0001;
+const bassMarbleCategory = 0x0002;
+const worldCategory = 0x0003;
+
 // DOM and global variables
 const body = document.querySelector('body');
 let engine, world;
 let strings = [], marbles = [], borders = [], grid = [], chimes = [];
 let isDragging = false;
+let bassMarble;
 let dragStart = null;
 
 // Mode toggles for placing marbles or creating strings
@@ -25,9 +30,12 @@ function setup() {
     createBorders();
     createChimes();
 
+    // Create bass marble
+    bassMarble = new BassMarble(width/2, height/2 + 200, 50);
+
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', handleCollision);
-    clearCanvas();   // Resize canvas 
+    redrawCanvas();   // Resize canvas 
 }
 
 // Handles collisions between marbles and strings
@@ -96,12 +104,13 @@ function draw() {
 
     if (mode.grid) grid.forEach(gridLine => gridLine.draw());
     // borders.forEach(border => border.draw());
+    chimes.forEach(chime => chime.draw());
+    bassMarble.draw();
     strings.forEach(string => string.draw());
     marbles.forEach(marble => marble.draw());
-    chimes.forEach(chime => chime.draw());
 }
 
-function clearCanvas() {
+function redrawCanvas() {
     clearBorders();
     clearChimes();
     drawCanvas();
@@ -110,4 +119,4 @@ function clearCanvas() {
     createChimes();
 }
 
-window.addEventListener('resize', clearCanvas);
+window.addEventListener('resize', redrawCanvas);

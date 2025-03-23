@@ -11,6 +11,9 @@ class Boundary {
             isStatic: true
         }
         this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options);
+        // this.body.collisionFilter = {
+        //     category: worldCategory,
+        // }
         Composite.add(world, this.body);
     }
 
