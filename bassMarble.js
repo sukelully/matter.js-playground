@@ -9,7 +9,7 @@ class Marble {
             friction: 0,
             frictionAir: 0,
             restitution: 1,
-            label: 'marble',
+            label: 'bass-marble',
         };
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);
         Composite.add(world, this.body);
@@ -25,15 +25,13 @@ class Marble {
     }
 
     static getRandomVelocity() {
-        const maxSpeed = 5; // Adjust this value as needed
-        const vx = (Math.random() - 0.5) * 2 * maxSpeed; // Random velocity in x direction
-        const vy = (Math.random() - 0.5) * 2 * maxSpeed; // Random velocity in y direction
+        const maxSpeed = 5;
+        const vx = (Math.random() - 0.5) * 2 * maxSpeed;
+        const vy = (Math.random() - 0.5) * 2 * maxSpeed;
         return { x: vx, y: vy };
     }
 
     draw() {
-        // console.log(Body.getVelocity());
-
         let pos = this.body.position;
         push();
         translate(pos.x, pos.y);

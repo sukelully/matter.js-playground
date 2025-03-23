@@ -39,24 +39,6 @@ function smoothVelocity(velocity) {
     return 0.9995 - 0.1 * Math.exp(-0.35 * velocity);
 }
 
-// Clears all borders from the canvas
-function clearBorders() {
-    borders.forEach(border => border.remove());
-    borders = [];
-}
-
-// Clears all marbles from the canvas
-function clearMarbles() {
-    marbles.forEach(marble => marble.remove());
-    marbles = [];
-}
-
-// Clears all strings from the canvas
-function clearStrings() {
-    strings.forEach(string => string.remove());
-    strings = [];
-}
-
 // Creates a line between two points and adds it to the specified array
 function createLineBetweenPoints(arr, pos1, pos2, thickness = 5) {
     const midX = (pos2.x + pos1.x) / 2;
@@ -78,14 +60,23 @@ function createLineBetweenPoints(arr, pos1, pos2, thickness = 5) {
 }
 
 function createChimes() {
-    chimes.push(new Chime(0, 0, 200));
-    chimes.push(new Chime(width, 0, 200));
-    chimes.push(new Chime(width, height, 200));
-    chimes.push(new Chime(0, height, 200));
+    if (screen.width > 640) {
+        chimes.push(new Chime(width/2, height/2, width/4, 261.63, 1/2));     // Center
+        chimes.push(new Chime(width, 0, width/4, 329.63));              // Top right
+        chimes.push(new Chime(width, height, width/4, 392));           // Bottom right
+        chimes.push(new Chime(0, height, width/4, 493.88));             // Bottom left
+        chimes.push(new Chime(0, 0, width/4, 523.25));                  // Top left
+    } else {
+        chimes.push(new Chime(width/2, height/2, 100, 261.63, 1/2));         // Center
+        chimes.push(new Chime(width, 0, 150, 329.63));                  // Top right
+        chimes.push(new Chime(width, height, 150, 392,));               // Bottom right
+        chimes.push(new Chime(0, height, 150, 493.88));                 // Bottom left
+        chimes.push(new Chime(0, 0, 150, 523.25));                      // Top left
+    }
 }
 
 // Generates borders around the canvas
-function generateBorders() {
+function createBorders() {
     const thickness = 50;
     borders.push(new Boundary(width / 2, -thickness / 2, width, thickness));
     borders.push(new Boundary(-thickness / 2, height / 2, thickness, height));
@@ -243,6 +234,29 @@ function applyRowLayout(controlsContainer) {
     body.style.flexDirection = 'row';
     body.style.gap = '3em';
     controlsContainer.style.flexDirection = 'column';
+}
+
+// Clears all borders from the canvas
+function clearBorders() {
+    borders.forEach(border => border.remove());
+    borders = [];
+}
+
+function clearChimes() {
+    chimes.forEach(chime => chime.remove());
+    chimes = [];
+}
+
+// Clears all marbles from the canvas
+function clearMarbles() {
+    marbles.forEach(marble => marble.remove());
+    marbles = [];
+}
+
+// Clears all strings from the canvas
+function clearStrings() {
+    strings.forEach(string => string.remove());
+    strings = [];
 }
 
 // function mousePressed() {

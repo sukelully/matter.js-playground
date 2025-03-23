@@ -22,7 +22,7 @@ function setup() {
     world = engine.world;
 
     // Generate borders and add initial objects
-    generateBorders();
+    createBorders();
     createChimes();
 
     // Add collision event listener
@@ -39,20 +39,21 @@ function handleCollision(event) {
 
         // Check if one body is a marble and the other is a string
         const isMarbleAndString =
-            (bodyA.label === 'marble' && bodyB.label === 'string') ||
-            (bodyA.label === 'string' && bodyB.label === 'marble');
+            (bodyA.label === 'marble' && bodyB.label === 'chime') ||
+            (bodyA.label === 'chime' && bodyB.label === 'marble');
 
         if (isMarbleAndString) {
-            const stringBody = bodyA.label === 'string' ? bodyA : bodyB;
+            const chimeBody = bodyA.label === 'chime' ? bodyA : bodyB;
             
             const marbleBody = bodyB;
             const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
 
             // Find the corresponding String instance and play sound
-            const stringInstance = strings.find(string => string.body === stringBody);
-            if (stringInstance) {
+            const chimeInstance = chimes.find(chime => chime.body === chimeBody);
+            if (chimeInstance) {
                 // stringInstance.play(smoothVelocity(velocity));
-                stringInstance.play();
+                chimeInstance.play();
+                console.log('collision');
             }
         }
     });
@@ -102,9 +103,11 @@ function draw() {
 
 function clearCanvas() {
     clearBorders();
+    clearChimes();
     drawCanvas();
     drawGrid();
-    generateBorders();
+    createBorders();
+    createChimes();
 }
 
 window.addEventListener('resize', clearCanvas);
