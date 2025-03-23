@@ -1,3 +1,4 @@
-# String Theory
+# Unwind Chimes
+A relaxing and clumsily operated string synth! Unwind Chimes uses [matter.js](https://github.com/liabru/matter-js) physics simulations to create plucked string sounds using the Karplus-Strong algorithm when collisions occur.
 
-A fun and clumsily operated string synth! String Theory simulates physics using [matter.js](https://github.com/liabru/matter-js) to draw strings and strike them with marbles.
+[Live Demo](https://sukelully.github.io/unwind-chimes/)
