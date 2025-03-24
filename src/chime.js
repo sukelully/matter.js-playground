@@ -22,7 +22,7 @@ class Chime {
         push();
         translate(pos.x, pos.y);
         strokeWeight(1);
-        stroke(255);
+        stroke(0);
         fill(0);
         ellipse(0, 0, this.r);
         pop();
