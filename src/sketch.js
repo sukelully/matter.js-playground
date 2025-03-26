@@ -50,18 +50,32 @@ function handleCollision(event) {
             (bodyA.label === 'marble' && bodyB.label === 'chime') ||
             (bodyA.label === 'chime' && bodyB.label === 'marble');
 
+        const isBassMarbleAndString =
+            (bodyA.label === 'bass-marble' && bodyB.label === 'chime') ||
+            (bodyA.label === 'chime' && bodyB.label === 'bass-marble');
+
         if (isMarbleAndString) {
             const chimeBody = bodyA.label === 'chime' ? bodyA : bodyB;
             
-            const marbleBody = bodyB;
-            const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
+            // const marbleBody = bodyB;
+            // const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
 
             // Find the corresponding String instance and play sound
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
                 // stringInstance.play(smoothVelocity(velocity));
                 chimeInstance.play();
-                console.log('collision');
+            }
+        }
+
+        if (isBassMarbleAndString) {
+            const chimeBody = bodyA.label === 'chime' ? bodyA : bodyB;
+
+            // const marbleBody = bodyB;
+
+            const chimeInstance = chimes.find(chime => chime.body === chimeBody);
+            if (chimeInstance) {
+                console.log('bass-marble collision');
             }
         }
     });
