@@ -81,6 +81,10 @@ function handleCollision(event) {
     });
 }
 
+function changeChimeFreq(first, third, fifth, seventh, extended) {
+
+}
+
 function mousePressed() {
     // Limit mouse presses to canvas area
     let gridX, gridY;
@@ -125,6 +129,8 @@ function draw() {
 }
 
 function redrawCanvas() {
+    bassMarble.remove();
+    bassMarble = new BassMarble(width/2, height/2 + 200, 50);
     clearBorders();
     clearChimes();
     drawCanvas();
