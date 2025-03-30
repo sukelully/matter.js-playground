@@ -75,27 +75,28 @@ function handleCollision(event) {
 
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
-
+                
+                // Causes drop outs
                 switch(chimeInstance.body.label) {
                     case 'chime-1':
                         // console.log('1');
-                        changeChimesFreq(cMaj.first, cMaj.third, cMaj.fifth, cMaj.extended);
+                        // changeChimesFreq(cMaj.first, cMaj.third, cMaj.fifth, cMaj.extended);
                         break;
                     case 'chime-2':
                         // console.log('2');
-                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
+                        // changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
                         break;
                     case 'chime-3':
                         // console.log('3');
-                        changeChimesFreq(fMaj.first, fMaj.third, fMaj.fifth, fMaj.extended);
+                        // changeChimesFreq(fMaj.first, fMaj.third, fMaj.fifth, fMaj.extended);
                         break;
                     case 'chime-4':
                         // console.log('4');
-                        changeChimesFreq(gMaj.first, gMaj.third, gMaj.fifth, gMaj.extended);
+                        // changeChimesFreq(gMaj.first, gMaj.third, gMaj.fifth, gMaj.extended);
                         break;
                     case 'chime-5':
                         // console.log('5');
-                        changeChimesFreq(aMin.first, aMin.third, aMin.fifth, aMin.extended);
+                        // changeChimesFreq(aMin.first, aMin.third, aMin.fifth, aMin.extended);
                         break;
                     default:
                         break;
