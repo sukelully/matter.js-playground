@@ -46,7 +46,8 @@ class Chime {
 
         for (let i = 0; i < bufferSize; i++) {
             const noiseBurst = audioContext.sampleRate / 100;
-            const sample = (i < noiseBurst) ? Math.random() * 2 * 0.2 - 0.2 : 0;
+            // 0.1 is volume
+            const sample = (i < noiseBurst) ? Math.random() * 2 * 0.1 - 0.1 : 0;
 
             // Apply lowpass by averaging adjacent delay line samples
             delayBuffer[dbIndex] = sample + 0.995 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;

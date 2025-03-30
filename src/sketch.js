@@ -55,7 +55,7 @@ function handleCollision(event) {
             (bodyA.label.startsWith('chime') && bodyB.label === 'bass-marble');
 
         if (isMarbleAndString) {
-            const chimeBody = bodyA.label === 'chime' ? bodyA : bodyB;
+            const chimeBody = bodyA.label.startsWith('chime') ? bodyA : bodyB;
             
             // const marbleBody = bodyB;
             // const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
@@ -64,6 +64,7 @@ function handleCollision(event) {
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
                 // stringInstance.play(smoothVelocity(velocity));
+                console.log('test');
                 chimeInstance.play();
             }
         }
@@ -78,19 +79,25 @@ function handleCollision(event) {
 
                 switch(chimeInstance.body.label) {
                     case 'chime-1':
-                        console.log('1');
+                        // console.log('1');
+                        // changeChimesFreq(cMaj.first, cMaj.third, cMaj.fifth, cMaj.extended);
+                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
                         break;
                     case 'chime-2':
-                        console.log('2');
+                        // console.log('2');
+                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
                         break;
                     case 'chime-3':
-                        console.log('3');
+                        // console.log('3');
+                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
                         break;
                     case 'chime-4':
-                        console.log('4');
+                        // console.log('4');
+                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
                         break;
                     case 'chime-5':
-                        console.log('5');
+                        // console.log('5');
+                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
                         break;
                     default:
                         break;
@@ -101,8 +108,12 @@ function handleCollision(event) {
     });
 }
 
-function changeChimeFreq(first, third, fifth, seventh, extended) {
-
+function changeChimesFreq(first, third, fifth, seventh, extended) {
+    chimes[0].freq = first;
+    chimes[1].freq = third;
+    chimes[2].freq = fifth;
+    chimes[3].freq = seventh;
+    chimes[4].freq = extended;
 }
 
 function mousePressed() {
