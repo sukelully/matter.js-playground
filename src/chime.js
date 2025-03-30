@@ -31,16 +31,12 @@ class Chime {
     // Play string pluck at given frequency
     play() {
         // Initialize audioContext if it doesn't exist
-        if (!audioContext) {
-            audioContext = new AudioContext();
-        }
-
         const delaySamples = Math.round(audioContext.sampleRate / (this.freq * this.oct));
         const delayBuffer = new Float32Array(delaySamples);
         let dbIndex = 0;
 
         // 7s output buffer
-        const bufferSize = audioContext.sampleRate * 7;
+        const bufferSize = audioContext.sampleRate * 5;
         const outputBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
         const output = outputBuffer.getChannelData(0);
 
@@ -50,7 +46,7 @@ class Chime {
             const sample = (i < noiseBurst) ? Math.random() * 2 * 0.1 - 0.1 : 0;
 
             // Apply lowpass by averaging adjacent delay line samples
-            delayBuffer[dbIndex] = sample + 0.995 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
+            delayBuffer[dbIndex] = sample + 0.999 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
             output[i] = delayBuffer[dbIndex];
 
             // Loop delay buffer
@@ -63,6 +59,9 @@ class Chime {
         source.buffer = outputBuffer;
         source.connect(audioContext.destination);
         source.start();
+        source.onended = () => {
+            source.disconnect();
+        }
     }
 
     remove() {

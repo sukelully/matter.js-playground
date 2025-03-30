@@ -3,7 +3,11 @@ let buttonHighlight = '#252525';
 let buttonHighlightText = 'white';
 let stringPos1, stringPos2;
 let mouseCount = 0;
-let audioContext;
+const audioContext = new (window.AudioContext || window.webkitAudioContext)({
+    latencyHint: 'interactive',
+    sampleRate: 44100,
+    bufferSize: 4096
+});
 let source;
 let octave = 1;
 

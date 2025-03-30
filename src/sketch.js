@@ -64,7 +64,6 @@ function handleCollision(event) {
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
                 // stringInstance.play(smoothVelocity(velocity));
-                console.log('test');
                 chimeInstance.play();
             }
         }
@@ -80,8 +79,7 @@ function handleCollision(event) {
                 switch(chimeInstance.body.label) {
                     case 'chime-1':
                         // console.log('1');
-                        // changeChimesFreq(cMaj.first, cMaj.third, cMaj.fifth, cMaj.extended);
-                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
+                        changeChimesFreq(cMaj.first, cMaj.third, cMaj.fifth, cMaj.extended);
                         break;
                     case 'chime-2':
                         // console.log('2');
@@ -89,15 +87,15 @@ function handleCollision(event) {
                         break;
                     case 'chime-3':
                         // console.log('3');
-                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
+                        changeChimesFreq(fMaj.first, fMaj.third, fMaj.fifth, fMaj.extended);
                         break;
                     case 'chime-4':
                         // console.log('4');
-                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
+                        changeChimesFreq(gMaj.first, gMaj.third, gMaj.fifth, gMaj.extended);
                         break;
                     case 'chime-5':
                         // console.log('5');
-                        changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
+                        changeChimesFreq(aMin.first, aMin.third, aMin.fifth, aMin.extended);
                         break;
                     default:
                         break;
