@@ -1,5 +1,5 @@
 class Marble {
-    constructor(x, y, r) {
+    constructor(x, y, r, chime) {
         this.x = x;
         this.y = y;
         this.r = r;
@@ -52,7 +52,7 @@ class Marble {
         }
     }
 
-    // Remove marble from worl
+    // Remove marble from world
     remove() {
         Composite.remove(world, this.body);
     }
