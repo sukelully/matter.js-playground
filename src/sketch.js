@@ -75,8 +75,28 @@ function handleCollision(event) {
 
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
-                console.log(chimeInstance.body.label);
+
+                switch(chimeInstance.body.label) {
+                    case 'chime-1':
+                        console.log('1');
+                        break;
+                    case 'chime-2':
+                        console.log('2');
+                        break;
+                    case 'chime-3':
+                        console.log('3');
+                        break;
+                    case 'chime-4':
+                        console.log('4');
+                        break;
+                    case 'chime-5':
+                        console.log('5');
+                        break;
+                    default:
+                        break;
+                }
             }
+
         }
     });
 }
