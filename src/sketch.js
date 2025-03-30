@@ -47,12 +47,12 @@ function handleCollision(event) {
 
         // Check if one body is a marble and the other is a string
         const isMarbleAndString =
-            (bodyA.label === 'marble' && bodyB.label === 'chime') ||
-            (bodyA.label === 'chime' && bodyB.label === 'marble');
+            (bodyA.label === 'marble' && bodyB.label.startsWith('chime')) ||
+            (bodyA.label.startsWith('chime') && bodyB.label === 'marble');
 
         const isBassMarbleAndString =
-            (bodyA.label === 'bass-marble' && bodyB.label === 'chime') ||
-            (bodyA.label === 'chime' && bodyB.label === 'bass-marble');
+            (bodyA.label === 'bass-marble' && bodyB.label.startsWith('chime')) ||
+            (bodyA.label.startsWith('chime') && bodyB.label === 'bass-marble');
 
         if (isMarbleAndString) {
             const chimeBody = bodyA.label === 'chime' ? bodyA : bodyB;
@@ -75,7 +75,7 @@ function handleCollision(event) {
 
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
-                console.log('bass-marble collision');
+                console.log(chimeInstance.body.label);
             }
         }
     });

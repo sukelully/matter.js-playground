@@ -1,5 +1,5 @@
 class Chime {
-    constructor(x, y, r, freq, oct = 1) {
+    constructor(x, y, r, freq, chime, oct = 1) {
         this.x = x;
         this.y = y;
         this.r = r;
@@ -10,7 +10,7 @@ class Chime {
             friction: 0,
             restitution: 1,
             isStatic: true,
-            label: 'chime'
+            label: chime
         }
 
         this.body = Bodies.circle(this.x, this.y, this.r / 2, options);

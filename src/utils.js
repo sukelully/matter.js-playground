@@ -60,18 +60,19 @@ function createLineBetweenPoints(arr, pos1, pos2, thickness = 5) {
 }
 
 function createChimes() {
+    // Mobile mode
     if (screen.width > 640) {
-        chimes.push(new Chime(width/2, height/2, width/4, 261.63, 1/2));     // Center
-        chimes.push(new Chime(width, 0, width/4, 329.63));              // Top right
-        chimes.push(new Chime(width, height, width/4, 392));           // Bottom right
-        chimes.push(new Chime(0, height, width/4, 493.88));             // Bottom left
-        chimes.push(new Chime(0, 0, width/4, 523.25));                  // Top left
+        chimes.push(new Chime(width/2, height/2, width/4, 261.63, 'chime-1', 1/2));    // Center
+        chimes.push(new Chime(width, 0, width/4, 329.63, 'chime-2'));                  // Top right
+        chimes.push(new Chime(width, height, width/4, 392, 'chime-3'));                // Bottom right
+        chimes.push(new Chime(0, height, width/4, 493.88, 'chime-4'));                 // Bottom left
+        chimes.push(new Chime(0, 0, width/4, 523.25, 'chime-5'));                      // Top left
     } else {
-        chimes.push(new Chime(width/2, height/2, 100, 261.63, 1/2));         // Center
-        chimes.push(new Chime(width, 0, 150, 329.63));                  // Top right
-        chimes.push(new Chime(width, height, 150, 392,));               // Bottom right
-        chimes.push(new Chime(0, height, 150, 493.88));                 // Bottom left
-        chimes.push(new Chime(0, 0, 150, 523.25));                      // Top left
+        chimes.push(new Chime(width/2, height/2, 100, 261.63, 'chime-1', 1/2));        // Center
+        chimes.push(new Chime(width, 0, 150, 329.63, 'chime-2'));                      // Top right
+        chimes.push(new Chime(width, height, 150, 392, 'chime-3'));                    // Bottom right
+        chimes.push(new Chime(0, height, 150, 493.88, 'chime-4'));                     // Bottom left
+        chimes.push(new Chime(0, 0, 150, 523.25, 'chime-5'));                          // Top left
     }
 }
 

@@ -1,5 +1,5 @@
 class Marble {
-    constructor(x, y, r, chime) {
+    constructor(x, y, r) {
         this.x = x;
         this.y = y;
         this.r = r;
