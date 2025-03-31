@@ -20,7 +20,7 @@ function setupUI() {
         { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
         { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
         { id: 'grid-btn', text: 'Grid', handler: toggleGrid },
-        { id: 'stop-sound-btn', text: 'Stop Chimes', handler: stopChimes }
+        // { id: 'stop-sound-btn', text: 'Stop Chimes', handler: stopChimes }
     ];
 
     buttons.forEach(({ id, text, handler }) => {
