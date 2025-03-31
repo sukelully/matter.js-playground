@@ -80,39 +80,30 @@ function handleCollision(event) {
                 switch(chimeInstance.body.label) {
                     case 'chime-1':
                         // console.log('1');
-                        // changeChimesFreq(cMaj.first, cMaj.third, cMaj.fifth, cMaj.extended);
+                        createChimes(cMaj.first, cMaj.third, cMaj.fifth, cMaj.seventh, cMaj.extended);
                         break;
                     case 'chime-2':
                         // console.log('2');
-                        // changeChimesFreq(dMin.first, dMin.third, dMin.fifth, dMin.extended);
+                        createChimes(dMin.first, dMin.third, dMin.fifth, dMin.seventh, dMin.extended);
                         break;
                     case 'chime-3':
                         // console.log('3');
-                        // changeChimesFreq(fMaj.first, fMaj.third, fMaj.fifth, fMaj.extended);
+                        createChimes(fMaj.first, fMaj.third, fMaj.fifth, fMaj.seventh, fMaj.extended);
                         break;
                     case 'chime-4':
                         // console.log('4');
-                        // changeChimesFreq(gMaj.first, gMaj.third, gMaj.fifth, gMaj.extended);
+                        createChimes(gMaj.first, gMaj.third, gMaj.fifth, gMaj.seventh, gMaj.extended);
                         break;
                     case 'chime-5':
                         // console.log('5');
-                        // changeChimesFreq(aMin.first, aMin.third, aMin.fifth, aMin.extended);
+                        createChimes(aMin.first, aMin.third, aMin.fifth, aMin.seventh, aMin.extended);
                         break;
                     default:
                         break;
                 }
             }
-
         }
     });
-}
-
-function changeChimesFreq(first, third, fifth, seventh, extended) {
-    chimes[0].freq = first;
-    chimes[1].freq = third;
-    chimes[2].freq = fifth;
-    chimes[3].freq = seventh;
-    chimes[4].freq = extended;
 }
 
 function mousePressed() {
@@ -166,7 +157,7 @@ function redrawCanvas() {
     drawCanvas();
     drawGrid();
     createBorders();
-    createChimes();
+    createChimes(cMaj.first, cMaj.third, cMaj.fifth, cMaj.seventh, cMaj.extended);
 }
 
 window.addEventListener('resize', redrawCanvas);
