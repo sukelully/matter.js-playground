@@ -18,9 +18,7 @@ function setupUI() {
 
     const buttons = [
         { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
-        { id: 'create-string-btn', text: 'Create String', handler: () => setMode(false) },
         { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
-        { id: 'clear-strings-btn', text: 'Clear Strings', handler: clearStrings },
         { id: 'grid-btn', text: 'Grid', handler: toggleGrid }
     ];
 
@@ -56,29 +54,8 @@ function createLineBetweenPoints(arr, pos1, pos2, thickness = 5) {
     const hyp = Math.hypot(opp, adj);
     const rotation = Math.asin(opp / hyp);
 
-    if (arr === strings) {
-        arr.push(new String(midX, midY, hyp, thickness, rotation));
-    } else {
-        arr.push(new Boundary(midX, midY, hyp, thickness, rotation));
-    }
+    arr.push(new Boundary(midX, midY, hyp, thickness, rotation));
 }
-
-// function createChimes() {
-//     // Mobile mode
-//     if (screen.width > 640) {
-//         chimes.push(new Chime(width/2, height/2, width/4, 261.63, 'chime-1', 1/2));    // Center
-//         chimes.push(new Chime(width, 0, width/4, 329.63, 'chime-2'));                  // Top right
-//         chimes.push(new Chime(width, height, width/4, 392, 'chime-3'));                // Bottom right
-//         chimes.push(new Chime(0, height, width/4, 493.88, 'chime-4'));                 // Bottom left
-//         chimes.push(new Chime(0, 0, width/4, 523.25, 'chime-5'));                      // Top left
-//     } else {
-//         chimes.push(new Chime(width/2, height/2, 100, 261.63, 'chime-1', 1/2));        // Center
-//         chimes.push(new Chime(width, 0, 150, 329.63, 'chime-2'));                      // Top right
-//         chimes.push(new Chime(width, height, 150, 392, 'chime-3'));                    // Bottom right
-//         chimes.push(new Chime(0, height, 150, 493.88, 'chime-4'));                     // Bottom left
-//         chimes.push(new Chime(0, 0, 150, 523.25, 'chime-5'));                          // Top left
-//     }
-// }
 
 function createChimes(first, third, fifth, seventh, extended) {
     // Mobile mode
@@ -275,61 +252,3 @@ function clearMarbles() {
     marbles.forEach(marble => marble.remove());
     marbles = [];
 }
-
-// Clears all strings from the canvas
-function clearStrings() {
-    strings.forEach(string => string.remove());
-    strings = [];
-}
-
-// function mousePressed() {
-//     // Limit mouse presses to canvas area
-//     if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
-
-//     if (!mode.marbles) {
-//         // Start dragging for string creation
-//         isDragging = true;
-//         dragStart = mode.grid
-//             ? {
-//                   x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
-//                   y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE,
-//               }
-//             : { x: mouseX, y: mouseY };
-//     } else {
-//         marbles.push(new Marble(mouseX, mouseY, 30));
-//     }
-// }
-
-// function mouseDragged() {
-//     if (isDragging && mode.strings) {
-//         const dragEnd = mode.grid 
-//             ? {
-//                 x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
-//                 y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE
-//             }
-//             : { x: mouseX, y: mouseY };
-
-//         // Draw line - causes weird time issues
-//         // clear(); // Clear the canvas
-//         // background(255); // Redraw background
-//         // draw(); // Redraw existing objects
-//         // stroke(0); // Set line color
-//         // line(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y); // Draw the line
-//     }
-// }
-
-// function mouseReleased() {
-//     if (isDragging && mode.strings) {
-//         const dragEnd = mode.grid
-//             ? {
-//                 x: Math.round(mouseX / GRID_SIZE) * GRID_SIZE,
-//                 y: Math.round(mouseY / GRID_SIZE) * GRID_SIZE
-//             }
-//             : { x: mouseX, y: mouseY };
-
-//         createLineBetweenPoints(strings,dragStart, dragEnd, 10);
-
-//         isDragging = false;
-//         dragStart = null
-//     }
-// }

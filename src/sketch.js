@@ -8,13 +8,13 @@ const worldCategory = 0x0003;
 // DOM and global variables
 const body = document.querySelector('body');
 let engine, world;
-let strings = [], marbles = [], borders = [], grid = [], chimes = [];
+let marbles = [], borders = [], grid = [], chimes = [];
 let isDragging = false;
 let bassMarble;
 let dragStart = null;
 
 // Mode toggles for placing marbles or creating strings
-const mode = { marbles: true, strings: false, grid: false };
+const mode = { marbles: true, grid: false };
 
 // Call drawCanvas in setup and on resize
 function setup() {
@@ -109,24 +109,6 @@ function mousePressed() {
     // Place marbles
     if (mode.marbles) {
         marbles.push(new Marble(mouseX, mouseY, 30));
-    // Or create strings
-    } else {
-        // Round to nearest grid cell size
-        if (mode.grid) {
-            gridX = Math.round(mouseX / GRID_SIZE) * GRID_SIZE;
-            gridY = Math.round(mouseY / GRID_SIZE) * GRID_SIZE;
-        } else {
-            gridX = mouseX;
-            gridY = mouseY;
-        }
-        if (mouseCount === 0) {
-            stringPos1 = { x: gridX, y: gridY };
-            mouseCount++;
-        } else {
-            stringPos2 = { x: gridX, y: gridY };
-            createLineBetweenPoints(strings, stringPos1, stringPos2);
-            mouseCount = 0;
-        }
     }
 }
 
@@ -140,7 +122,6 @@ function draw() {
     // borders.forEach(border => border.draw());
     chimes.forEach(chime => chime.draw());
     bassMarble.draw();
-    strings.forEach(string => string.draw());
     marbles.forEach(marble => marble.draw());
 }
 
