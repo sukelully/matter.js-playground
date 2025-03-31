@@ -36,7 +36,7 @@ class Chime {
         let dbIndex = 0;
 
         // 7s output buffer
-        const bufferSize = audioContext.sampleRate * 5;
+        const bufferSize = audioContext.sampleRate * 7;
         const outputBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
         const output = outputBuffer.getChannelData(0);
 
@@ -56,8 +56,12 @@ class Chime {
         }
 
         const source = audioContext.createBufferSource();
+        const filter = audioContext.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(500, audioContext.currentTime);
         source.buffer = outputBuffer;
-        source.connect(audioContext.destination);
+        source.connect(filter);
+        filter.connect(audioContext.destination);
         source.start();
         source.onended = () => {
             source.disconnect();

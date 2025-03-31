@@ -79,23 +79,18 @@ function handleCollision(event) {
                 // Causes drop outs
                 switch(chimeInstance.body.label) {
                     case 'chime-1':
-                        // console.log('1');
                         createChimes(cMaj.first, cMaj.third, cMaj.fifth, cMaj.seventh, cMaj.extended);
                         break;
                     case 'chime-2':
-                        // console.log('2');
                         createChimes(dMin.first, dMin.third, dMin.fifth, dMin.seventh, dMin.extended);
                         break;
                     case 'chime-3':
-                        // console.log('3');
                         createChimes(fMaj.first, fMaj.third, fMaj.fifth, fMaj.seventh, fMaj.extended);
                         break;
                     case 'chime-4':
-                        // console.log('4');
                         createChimes(gMaj.first, gMaj.third, gMaj.fifth, gMaj.seventh, gMaj.extended);
                         break;
                     case 'chime-5':
-                        // console.log('5');
                         createChimes(aMin.first, aMin.third, aMin.fifth, aMin.seventh, aMin.extended);
                         break;
                     default:
