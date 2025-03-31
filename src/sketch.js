@@ -31,7 +31,7 @@ function setup() {
     createChimes();
 
     // Create bass marble
-    bassMarble = new BassMarble(width/2, height/2 + 200, 50);
+    bassMarble = new BassMarble(width / 2, height / 2 + 200, 50);
 
     // Add collision event listener
     Matter.Events.on(engine, 'collisionStart', handleCollision);
@@ -56,7 +56,7 @@ function handleCollision(event) {
 
         if (isMarbleAndString) {
             const chimeBody = bodyA.label.startsWith('chime') ? bodyA : bodyB;
-            
+
             // const marbleBody = bodyB;
             // const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
 
@@ -75,9 +75,9 @@ function handleCollision(event) {
 
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
-                
+
                 // Causes drop outs
-                switch(chimeInstance.body.label) {
+                switch (chimeInstance.body.label) {
                     case 'chime-1':
                         createChimes(cMaj.first, cMaj.third, cMaj.fifth, cMaj.seventh, cMaj.extended);
                         break;
@@ -102,10 +102,23 @@ function handleCollision(event) {
 }
 
 function mousePressed() {
-    // Limit mouse presses to canvas area
-    let gridX, gridY;
-    if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // true for mobile device
+        touchStarted();
+    } else {
+        // false for not mobile device
+        // Limit mouse presses to canvas area
+        let gridX, gridY;
+        if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
 
+        // Place marbles
+        if (mode.marbles) {
+            marbles.push(new Marble(mouseX, mouseY, 30));
+        }
+    }
+}
+
+function touchStarted() {
     // Place marbles
     if (mode.marbles) {
         marbles.push(new Marble(mouseX, mouseY, 30));
@@ -127,7 +140,7 @@ function draw() {
 
 function redrawCanvas() {
     bassMarble.remove();
-    bassMarble = new BassMarble(width/2, height/2 + 200, 50);
+    bassMarble = new BassMarble(width / 2, height / 2 + 200, 50);
     clearBorders();
     clearChimes();
     drawCanvas();

@@ -19,7 +19,8 @@ function setupUI() {
     const buttons = [
         { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
         { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
-        { id: 'grid-btn', text: 'Grid', handler: toggleGrid }
+        { id: 'grid-btn', text: 'Grid', handler: toggleGrid },
+        { id: 'stop-sound-btn', text: 'Stop Chimes', handler: stopChimes }
     ];
 
     buttons.forEach(({ id, text, handler }) => {
@@ -58,20 +59,21 @@ function createLineBetweenPoints(arr, pos1, pos2, thickness = 5) {
 }
 
 function createChimes(first, third, fifth, seventh, extended) {
-    // Mobile mode
     clearChimes();
+    
+    // Mobile mode
     if (screen.width > 640) {
-        chimes.push(new Chime(width/2, height/2, width/4, first, 'chime-1', 1/2));    // Center
-        chimes.push(new Chime(width, 0, width/4, third, 'chime-2'));                  // Top right
-        chimes.push(new Chime(width, height, width/4, fifth, 'chime-3'));                // Bottom right
-        chimes.push(new Chime(0, height, width/4, seventh, 'chime-4'));                 // Bottom left
-        chimes.push(new Chime(0, 0, width/4, extended, 'chime-5'));                      // Top left
+        chimes.push(new Chime(width/2, height/2, width/4, first, 'chime-1', 1/2));  // Center
+        chimes.push(new Chime(width, 0, width/4, third, 'chime-2'));                // Top right
+        chimes.push(new Chime(width, height, width/4, fifth, 'chime-3'));           // Bottom right
+        chimes.push(new Chime(0, height, width/4, seventh, 'chime-4'));             // Bottom left
+        chimes.push(new Chime(0, 0, width/4, extended, 'chime-5'));                 // Top left
     } else {
-        chimes.push(new Chime(width/2, height/2, 100, first, 'chime-1', 1/2));        // Center
-        chimes.push(new Chime(width, 0, 150, third, 'chime-2'));                      // Top right
-        chimes.push(new Chime(width, height, 150, fifth, 'chime-3'));                    // Bottom right
-        chimes.push(new Chime(0, height, 150, seventh, 'chime-4'));                     // Bottom left
-        chimes.push(new Chime(0, 0, 150, extended, 'chime-5'));                          // Top left
+        chimes.push(new Chime(width/2, height/2, 100, first, 'chime-1', 1/2));      // Center
+        chimes.push(new Chime(width, 0, 150, third, 'chime-2'));                    // Top right
+        chimes.push(new Chime(width, height, 150, fifth, 'chime-3'));               // Bottom right
+        chimes.push(new Chime(0, height, 150, seventh, 'chime-4'));                 // Bottom left
+        chimes.push(new Chime(0, 0, 150, extended, 'chime-5'));                     // Top left
     }
 }
 
