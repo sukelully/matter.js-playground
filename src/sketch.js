@@ -146,7 +146,6 @@ function redrawCanvas() {
     clearBorders();
     clearChimes();
     drawCanvas();
-    drawGrid();
     createBorders();
     createChimes(cMaj.first, cMaj.third, cMaj.fifth, cMaj.seventh, cMaj.extended);
 }

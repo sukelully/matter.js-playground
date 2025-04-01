@@ -19,7 +19,6 @@ function setupUI() {
     const buttons = [
         { id: 'place-marble-btn', text: 'Place Marble', handler: () => setMode(true) },
         { id: 'clear-marbles-btn', text: 'Clear Marbles', handler: clearMarbles },
-        { id: 'grid-btn', text: 'Grid', handler: toggleGrid },
         // { id: 'stop-sound-btn', text: 'Stop Chimes', handler: stopChimes }
     ];
 
@@ -148,30 +147,6 @@ function isWithinCanvas(x, y, radius) {
     ];
 
     return corners.some(({ cx, cy }) => (x - cx) ** 2 + (y - cy) ** 2 < radius ** 2);
-}
-
-function toggleGrid() {
-    if (mode.grid) {
-        mode.grid = false;
-    } else {
-        mode.grid = true;
-    }
-    applyButtonHighlight(document.getElementById('grid-btn'), mode.grid);
-    drawGrid();
-}
-
-function drawGrid() {
-    for (let i = 0; i < height; i++) {
-        if (i % GRID_SIZE === 0) {
-            grid.push(new GridLine(width / 2, i, width, 1));
-        }
-    }
-
-    for (let j = 0; j < height; j++) {
-        if (j % GRID_SIZE === 0) {
-            grid.push(new GridLine(j, height / 2, 1, height));
-        }
-    }
 }
 
 // Toggles between marble and string placement modes
