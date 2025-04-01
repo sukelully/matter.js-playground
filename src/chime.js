@@ -64,7 +64,7 @@ class Chime {
         
         source.connect(filter);
         filter.connect(audioContext.destination);
-        
+
         source.start();
         source.onended = () => {
             source.disconnect();

@@ -78,6 +78,10 @@ function setupUI() {
     body.appendChild(controlsContainer);
 }
 
+function stopChimes() {
+    console.log("test");
+}
+
 function smoothVelocity(velocity) {
     return 0.9995 - 0.1 * Math.exp(-0.35 * velocity);
 }
@@ -124,55 +128,6 @@ function createBorders() {
     borders.push(new Boundary(-thickness / 2, height / 2, thickness, height));
     borders.push(new Boundary(width / 2, height + thickness / 2, width, thickness));
     borders.push(new Boundary(width + thickness / 2, height / 2, thickness, height));
-
-    createCornerBorders();
-}
-
-// Creates corner borders with angled lines
-function createCornerBorders() {
-    if (screen.width > 640) {
-        // Top-left corner
-        createLineBetweenPoints(borders, { x: -6, y: 50 }, { x: 50, y: -6 }, 20);
-        createLineBetweenPoints(borders, { x: 0, y: 25 }, { x: 75, y: -10 }, 20);
-        createLineBetweenPoints(borders, { x: -10, y: 75 }, { x: 25, y: 0 }, 20);
-
-        // Top-right corner
-        createLineBetweenPoints(borders, { x: width + 6, y: 50 }, { x: width - 50, y: -6 }, 20);
-        createLineBetweenPoints(borders, { x: width, y: 25 }, { x: width - 75, y: -10 }, 20);
-        createLineBetweenPoints(borders, { x: width + 10, y: 75 }, { x: width - 25, y: 0 }, 20);
-
-        // Bottom-left corner
-        createLineBetweenPoints(borders, { x: -6, y: height - 50 }, { x: 50, y: height + 6 }, 20);
-        createLineBetweenPoints(borders, { x: 0, y: height - 25 }, { x: 75, y: height + 10 }, 20);
-        createLineBetweenPoints(borders, { x: -10, y: height - 75 }, { x: 25, y: height }, 20);
-
-        // Bottom-right corner
-        createLineBetweenPoints(borders, { x: width + 6, y: height - 50 }, { x: width - 50, y: height + 6 }, 20);
-        createLineBetweenPoints(borders, { x: width, y: height - 25 }, { x: width - 75, y: height + 10 }, 20);
-        createLineBetweenPoints(borders, { x: width + 10, y: height - 75 }, { x: width - 25, y: height }, 20);
-    } else {
-        // Top-left corner
-        createLineBetweenPoints(borders, { x: -12, y: 50 }, { x: 50, y: -12 }, 20);
-        createLineBetweenPoints(borders, { x: 0, y: 20 }, { x: 75, y: -13 }, 20);
-        createLineBetweenPoints(borders, { x: -13, y: 75 }, { x: 20, y: 0 }, 20);
-
-        // Top-right corner
-        createLineBetweenPoints(borders, { x: width + 12, y: 50 }, { x: width - 50, y: -12 }, 20);
-        createLineBetweenPoints(borders, { x: width, y: 20 }, { x: width - 75, y: -13 }, 20);
-        createLineBetweenPoints(borders, { x: width + 13, y: 75 }, { x: width - 20, y: 0 }, 20);
-
-        // Bottom-left corner
-        createLineBetweenPoints(borders, { x: -12, y: height - 50 }, { x: 50, y: height + 12 }, 20);
-        createLineBetweenPoints(borders, { x: 0, y: height - 20 }, { x: 75, y: height + 13 }, 20);
-        createLineBetweenPoints(borders, { x: -13, y: height - 75 }, { x: 20, y: height }, 20);
-
-        // Bottom-right corner
-        createLineBetweenPoints(borders, { x: width + 12, y: height - 50 }, { x: width - 50, y: height + 12 }, 20);
-        createLineBetweenPoints(borders, { x: width, y: height - 20 }, { x: width - 75, y: height + 13 }, 20);
-        createLineBetweenPoints(borders, { x: width + 13, y: height - 75 }, { x: width - 20, y: height }, 20);
-
-
-    }
 }
 
 // Checks if coordinates are within the canvas, accounting for rounded corners
@@ -254,7 +209,6 @@ function applyRowLayout(controlsContainer) {
     controlsContainer.style.flexDirection = 'column';
 }
 
-// Clears all borders from the canvas
 function clearBorders() {
     borders.forEach(border => border.remove());
     borders = [];
@@ -265,7 +219,6 @@ function clearChimes() {
     chimes = [];
 }
 
-// Clears all marbles from the canvas
 function clearMarbles() {
     marbles.forEach(marble => marble.remove());
     marbles = [];
