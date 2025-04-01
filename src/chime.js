@@ -1,10 +1,9 @@
 class Chime {
-    constructor(x, y, r, freq, chime, oct = 1) {
+    constructor(x, y, r, freq, chime) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.freq = freq;
-        this.oct = oct;
 
         let options = {
             friction: 0,
@@ -29,9 +28,9 @@ class Chime {
     }
 
     // Play string pluck at given frequency
-    play() {
+    play(octave = 1) {
         // Initialize audioContext if it doesn't exist
-        const delaySamples = Math.round(audioContext.sampleRate / (this.freq * this.oct));
+        const delaySamples = Math.round(audioContext.sampleRate / (this.freq * octave));
         const delayBuffer = new Float32Array(delaySamples);
         let dbIndex = 0;
 
@@ -46,7 +45,7 @@ class Chime {
             const sample = (i < noiseBurst) ? Math.random() * 2 * 0.2 - 0.2 : 0;
 
             // Apply lowpass by averaging adjacent delay line samples
-            delayBuffer[dbIndex] = sample + 0.999 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
+            delayBuffer[dbIndex] = sample + 0.997 * (delayBuffer[dbIndex] + delayBuffer[(dbIndex + 1) % delaySamples]) / 2;
             output[i] = delayBuffer[dbIndex];
 
             // Loop delay buffer
@@ -54,14 +53,18 @@ class Chime {
                 dbIndex = 0;
             }
         }
-
+        
+        // Signal routing
         const source = audioContext.createBufferSource();
         const filter = audioContext.createBiquadFilter();
+        
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(500, audioContext.currentTime);
         source.buffer = outputBuffer;
+        
         source.connect(filter);
         filter.connect(audioContext.destination);
+        
         source.start();
         source.onended = () => {
             source.disconnect();

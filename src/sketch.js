@@ -69,29 +69,31 @@ function handleCollision(event) {
         }
 
         if (isBassMarbleAndString) {
-            const chimeBody = bodyA.label === 'chime' ? bodyA : bodyB;
-
-            // const marbleBody = bodyB;
-
+            const chimeBody = bodyA.label.startsWith('chime') ? bodyA : bodyB;
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
+            
+            // Switch chime notes and play root note
             if (chimeInstance) {
-
-                // Causes drop outs
                 switch (chimeInstance.body.label) {
                     case 'chime-1':
                         createChimes(cMaj.first, cMaj.third, cMaj.fifth, cMaj.seventh, cMaj.extended);
+                        chimes[0].play(1/2);
                         break;
                     case 'chime-2':
                         createChimes(dMin.first, dMin.third, dMin.fifth, dMin.seventh, dMin.extended);
+                        chimes[0].play(1/2);
                         break;
                     case 'chime-3':
                         createChimes(fMaj.first, fMaj.third, fMaj.fifth, fMaj.seventh, fMaj.extended);
+                        chimes[0].play(1/2);
                         break;
                     case 'chime-4':
                         createChimes(gMaj.first, gMaj.third, gMaj.fifth, gMaj.seventh, gMaj.extended);
+                        chimes[0].play(1/2);
                         break;
                     case 'chime-5':
                         createChimes(aMin.first, aMin.third, aMin.fifth, aMin.seventh, aMin.extended);
+                        chimes[0].play(1/2);
                         break;
                     default:
                         break;
