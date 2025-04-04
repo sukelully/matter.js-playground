@@ -161,10 +161,8 @@ function applyButtonHighlight(button, isActive) {
 }
 
 function drawCanvas() {
-    const screenWidthCutoff = screen.width % 100;
-    const screenHeightCutoff = screen.height % 100;
-    const screenWidth = screen.width - screenWidthCutoff;
-    const screenHeight = screen.height - screenHeightCutoff;
+    const screenWidth = screen.width - screen.width / 8;
+    const screenHeight = screen.height - screen.height / 8;
 
     const controlsContainer = document.getElementById('controls-container');
     const adjustedHeight = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;

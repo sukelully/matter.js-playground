@@ -57,13 +57,9 @@ function handleCollision(event) {
         if (isMarbleAndString) {
             const chimeBody = bodyA.label.startsWith('chime') ? bodyA : bodyB;
 
-            // const marbleBody = bodyB;
-            // const velocity = Math.hypot(marbleBody.velocity.x, marbleBody.velocity.y);
-
             // Find the corresponding String instance and play sound
             const chimeInstance = chimes.find(chime => chime.body === chimeBody);
             if (chimeInstance) {
-                // stringInstance.play(smoothVelocity(velocity));
                 chimeInstance.play();
             }
         }
