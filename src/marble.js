@@ -4,6 +4,7 @@ class Marble {
         this.y = y;
         this.r = r;
         this.color = Marble.getRandomColor();
+        this.className = 'noise';
 
         let options = {
             friction: 0,

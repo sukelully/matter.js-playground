@@ -6,7 +6,8 @@ class BassMarble extends Marble {
         this.body.label = 'bass-marble';
 
         // Explicitly enforce the color after the parent constructor
-        this.color = 'black';
+        this.color = Marble.getRandomColor();
+        this.className = 'noise';
 
         // Set a random velocity specific to BassMarble
         const randomVelocity = Marble.getRandomVelocity();
