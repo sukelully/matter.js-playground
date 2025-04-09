@@ -99,6 +99,12 @@ function handleCollision(event) {
     });
 }
 
+function applySpin(body) {
+    // Random spin direction and magnitude
+    const spin = (Math.random() - 0.5) * 0.2; // tweak the value as needed
+    Body.setAngularVelocity(body, spin);
+}
+
 function mousePressed() {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         touchStarted();
@@ -124,13 +130,17 @@ function touchStarted() {
 function draw() {
     clear();
     background(255);
+    // frameRate(30);
     Engine.update(engine);
 
     if (mode.grid) grid.forEach(gridLine => gridLine.draw());
     // borders.forEach(border => border.draw());
     chimes.forEach(chime => chime.draw());
     bassMarble.draw();
-    marbles.forEach(marble => marble.draw());
+    marbles.forEach(marble => {
+        marble.draw();
+        // marble.drawMarble();
+    });
 }
 
 function redrawCanvas() {
