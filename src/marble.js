@@ -4,7 +4,7 @@ class Marble {
         this.y = y;
         this.r = r;
         this.color = Marble.getRandomColor();
-        this.className = 'noise';
+        this.img = loadImage('src/img/marble.png');
 
         let options = {
             friction: 0,
@@ -52,6 +52,21 @@ class Marble {
             Body.setSpeed(this.body, 5);
         }
     }
+
+    // // Draw marble on screen
+    // draw() {
+    //     let pos = this.body.position;
+    //     push();
+    //     translate(pos.x, pos.y);
+    //     image(this.img, pos.x, pos.y, this.r, this.r, 0, 0, 0, 0, CENTE);
+    //     pop();
+        
+    //     // Prevent marbles from losing enough speed to stop
+    //     if (Body.getSpeed(this.body) < 5) {
+    //         Body.setSpeed(this.body, 5);
+    //     }
+    // }
+    
 
     // Remove marble from world
     remove() {

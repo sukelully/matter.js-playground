@@ -160,36 +160,31 @@ function applyButtonHighlight(button, isActive) {
     button.style.color = isActive ? buttonHighlightText : 'black';
 }
 
-// function drawCanvas() {
-//     const screenWidth = screen.width - screen.width / 8;
-//     const screenHeight = screen.height - screen.height / 8;
-
-//     const controlsContainer = document.getElementById('controls-container');
-//     const adjustedHeight = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
-
-//     const isLandscape = screen.width > screen.height;
-//     const isLargeScreen = screen.width > 640;
-
-//     if (isLandscape) {
-//         createCanvas(isLargeScreen ? screenHeight : screenWidth, isLargeScreen ? screenHeight : adjustedHeight);
-//     } else {
-//         createCanvas(screenWidth, isLargeScreen ? screenWidth : adjustedHeight);
-//     }
-
-//     const canvasControlsWidth = (body.offsetWidth > body.offsetHeight)
-//         ? width + 200
-//         : width + controlsContainer.offsetWidth;
-
-//     if (canvasControlsWidth > screen.width) {
-//         applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight);
-//     } else {
-//         applyRowLayout(controlsContainer);
-//     }
-// }
-
 function drawCanvas() {
-    // createCanvas(screen.width - screen.width / 8, screen.width / screen.width / 8);
-    createCanvas(500, 500);
+    const screenWidth = screen.width - screen.width / 8;
+    const screenHeight = screen.height - screen.height / 8;
+
+    const controlsContainer = document.getElementById('controls-container');
+    const adjustedHeight = Math.floor((screenHeight - controlsContainer.offsetHeight) / 10) * 10;
+
+    const isLandscape = screen.width > screen.height;
+    const isLargeScreen = screen.width > 640;
+
+    if (isLandscape) {
+        createCanvas(isLargeScreen ? screenHeight : screenWidth, isLargeScreen ? screenHeight : adjustedHeight);
+    } else {
+        createCanvas(screenWidth, isLargeScreen ? screenWidth : adjustedHeight);
+    }
+
+    const canvasControlsWidth = (body.offsetWidth > body.offsetHeight)
+        ? width + 200
+        : width + controlsContainer.offsetWidth;
+
+    if (canvasControlsWidth > screen.width) {
+        applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight);
+    } else {
+        applyRowLayout(controlsContainer);
+    }
 }
 
 function applyColumnLayout(controlsContainer, isLargeScreen, adjustedHeight) {

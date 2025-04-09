@@ -101,12 +101,9 @@ function handleCollision(event) {
 
 function mousePressed() {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        // true for mobile device
         touchStarted();
     } else {
-        // false for not mobile device
         // Limit mouse presses to canvas area
-        let gridX, gridY;
         if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) return;
 
         // Place marbles
