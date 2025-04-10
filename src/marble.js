@@ -56,6 +56,7 @@ class Marble {
     // // Draw marble on screen
     draw() {
         let pos = this.body.position;
+        let angle = this.body.angle;
         push();
         imageMode(CENTER);
         image(this.img, pos.x, pos.y, this.r*2-12, this.r*2-12);
