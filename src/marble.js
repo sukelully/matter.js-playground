@@ -58,8 +58,10 @@ class Marble {
         let pos = this.body.position;
         let angle = this.body.angle;
         push();
+        translate(pos.x, pos.y);
+        rotate(angle);
         imageMode(CENTER);
-        image(this.img, pos.x, pos.y, this.r*2-12, this.r*2-12);
+        image(this.img, 0, 0, this.r*2-12, this.r*2-12);
         pop();
         
         // Prevent marbles from losing enough speed to stop
